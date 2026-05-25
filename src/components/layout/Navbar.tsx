@@ -44,17 +44,20 @@ export function Navbar() {
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled ? "glass py-4 shadow-[0_4px_30px_rgba(0,255,255,0.05)] border-b border-[rgba(255,255,255,0.05)]" : "py-6 bg-transparent"
+          scrolled || isOpen ? "glass py-4 shadow-[0_4px_30px_rgba(0,255,255,0.05)] border-b border-[rgba(255,255,255,0.05)]" : "py-4 md:py-6 bg-gradient-to-b from-black/60 to-transparent md:bg-transparent"
         )}
       >
         <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
           <motion.a 
             href="#"
-            className="text-2xl font-bold tracking-tighter text-white relative z-10"
+            className="text-2xl font-bold tracking-tighter text-white relative z-10 flex items-center gap-2"
             whileHover={{ scale: 1.05, textShadow: "0px 0px 8px rgba(0,255,255,0.8)" }}
             onClick={closeMenu}
           >
-            Z<span className="text-[var(--color-neon-cyan)]">U</span>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-neon-cyan)] to-[var(--color-neon-purple)] flex items-center justify-center shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+              <span className="text-white font-extrabold text-lg">Z</span>
+            </div>
+            <span className="tracking-widest">U</span>
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -76,11 +79,11 @@ export function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden text-white relative z-50 p-2 focus:outline-none"
+            className="md:hidden relative z-50 p-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center transition-all active:scale-95 text-gray-300 hover:text-white hover:bg-white/10 hover:border-white/20 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={22} className="text-[var(--color-neon-purple)]" /> : <Menu size={22} className="text-[var(--color-neon-cyan)]" />}
           </button>
         </div>
       </motion.header>

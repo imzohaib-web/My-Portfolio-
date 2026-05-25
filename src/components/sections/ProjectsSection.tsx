@@ -30,7 +30,7 @@ const projects = [
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24 relative z-10">
+    <section id="projects" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6">
         <SectionHeading title="Featured Projects" subtitle="A selection of my recent AI and Web engineering work." />
         

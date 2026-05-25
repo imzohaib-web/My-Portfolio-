@@ -20,7 +20,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-24 relative z-10">
+    <section id="about" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6">
         <SectionHeading 
           title="About Me" 

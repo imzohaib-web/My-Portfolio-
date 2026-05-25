@@ -5,7 +5,7 @@ import { SectionHeading } from "../ui/SectionHeading";
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 relative z-10">
+    <section id="experience" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6">
         <SectionHeading title="Experience" />
         

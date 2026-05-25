@@ -29,7 +29,7 @@ const skillsData = [
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-24 relative z-10">
+    <section id="skills" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6">
         <SectionHeading title="Technical Arsenal" subtitle="Technologies and tools I use to build digital solutions." />
         

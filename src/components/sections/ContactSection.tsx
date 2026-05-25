@@ -7,7 +7,7 @@ import { Mail, MapPin } from "lucide-react";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 relative z-10">
+    <section id="contact" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6 max-w-4xl text-center">
         <SectionHeading title="Get In Touch" subtitle="Let's build something amazing together." />
         
