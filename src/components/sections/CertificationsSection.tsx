@@ -6,10 +6,11 @@ import { GlassCard } from "../ui/GlassCard";
 import { Award } from "lucide-react";
 
 const certs = [
-  "Programming for Everybody (Python)",
-  "AI For Everyone",
-  "Prompt Engineering for ChatGPT",
-  "Career Essentials in Generative AI"
+  " Programming for Everybody (Python) – Coursera, 2025",
+  "AI For Everyone – Coursera, 2025",
+  "Prompt Engineering for ChatGPT – Coursera, 2025",
+  "Career Essentials in Generative AI – LinkedIn & Microsoft, 2024",
+  "English Access Scholarship Program 2024-25"
 ];
 
 export function CertificationsSection() {

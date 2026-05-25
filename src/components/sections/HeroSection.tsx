@@ -70,9 +70,7 @@ export function HeroSection() {
           <GlowingButton href="#projects" variant="primary">
             View Projects <ArrowRight size={18} />
           </GlowingButton>
-          <GlowingButton href="/resume.pdf" variant="secondary" download>
-            Download Resume <Download size={18} />
-          </GlowingButton>
+        
           <GlowingButton href="#contact" variant="secondary">
             Contact Me <Mail size={18} />
           </GlowingButton>
