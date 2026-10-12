@@ -9,7 +9,7 @@ export function ExperienceSection() {
       <div className="container mx-auto px-6">
         <SectionHeading title="Experience" />
         
-        <div className="relative border-l-2 border-[rgba(255,255,255,0.1)] ml-4 md:ml-6 pb-4">
+        <div className="relative border-l-2 border-[rgba(255,255,255,0.1)] ml-4 md:ml-6 pb-4 space-y-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -18,6 +18,37 @@ export function ExperienceSection() {
             className="relative pl-8 md:pl-12"
           >
             <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[var(--color-neon-cyan)] shadow-[0_0_10px_var(--color-neon-cyan)]" />
+            
+            <span className="text-sm text-[var(--color-neon-purple)] font-mono font-semibold tracking-wider uppercase mb-2 block">
+              Jun 2026 – Sep 2026
+            </span>
+            <h3 className="text-2xl font-bold text-white">MERN Stack Developer Intern</h3>
+            <h4 className="text-lg text-gray-400 mb-4">Eziline</h4>
+            
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-start">
+                <span className="text-[var(--color-neon-cyan)] mr-3 mt-1">▹</span>
+                Developed and maintained features across two production MERN-stack platforms, Fabric Hub and Enterprise LMS
+              </li>
+              <li className="flex items-start">
+                <span className="text-[var(--color-neon-cyan)] mr-3 mt-1">▹</span>
+                Built REST APIs and UI components using MongoDB, Express, React, and Node.js
+              </li>
+              <li className="flex items-start">
+                <span className="text-[var(--color-neon-cyan)] mr-3 mt-1">▹</span>
+                Collaborated within a development team using Git/GitHub workflows
+              </li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative pl-8 md:pl-12"
+          >
+            <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-[var(--color-neon-purple)] shadow-[0_0_10px_var(--color-neon-purple)]" />
             
             <span className="text-sm text-[var(--color-neon-purple)] font-mono font-semibold tracking-wider uppercase mb-2 block">
               Internship
