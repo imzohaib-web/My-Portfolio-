@@ -12,7 +12,7 @@ const skillsData = [
   },
   {
     category: "Backend",
-    skills: ["Node js", "Laravel", "FastAPI", "MySQL"],
+    skills: ["Node.js", "Express", "MongoDB", "Laravel", "FastAPI", "MySQL"],
     color: "var(--color-neon-purple)"
   },
    {
