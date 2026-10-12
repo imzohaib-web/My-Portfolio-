@@ -35,10 +35,10 @@ export function AboutSection() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              I am a passionate <span className="text-white font-semibold">Software Engineering student</span> at COMSATS University Islamabad, with professional experience as a Front-End Developer Intern at Erudite Coaching Center.
+              I&apos;m a final-year Software Engineering student at COMSATS University Islamabad, with experience as a MERN Stack Developer Intern at Eziline and a Front-End Developer Intern at Erudite Coaching Center.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              My focus lies in building <span className="text-white font-semibold">scalable web applications</span> and <span className="text-[var(--color-neon-cyan)] font-semibold">intelligent AI-powered systems</span>. I thrive on combining modern frontend frameworks like React with robust backends (Node.js, Laravel) and cutting-edge AI tools (LangChain, LLM APIs).
+              My focus is building full-stack web applications and AI-driven systems — combining React and the MERN stack with retrieval-augmented generation, multi-agent automation, and LLM integration. I&apos;m currently leading the AI pipeline on my Final Year Project, an adaptive learning platform built around RAG.
             </p>
           </motion.div>
 
