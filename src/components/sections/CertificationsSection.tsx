@@ -6,7 +6,8 @@ import { GlassCard } from "../ui/GlassCard";
 import { Award } from "lucide-react";
 
 const certs = [
-  " Programming for Everybody (Python) – Coursera, 2025",
+  "Generative AI & Chatbot Development – Bano Qabil, 2026",
+  "Programming for Everybody (Python) – Coursera, 2025",
   "AI For Everyone – Coursera, 2025",
   "Prompt Engineering for ChatGPT – Coursera, 2025",
   "Career Essentials in Generative AI – LinkedIn & Microsoft, 2024",
