@@ -74,6 +74,10 @@ export function HeroSection() {
           <GlowingButton href="#contact" variant="secondary">
             Contact Me <Mail size={18} />
           </GlowingButton>
+
+          <GlowingButton href="/resume/Zohaib_Umer_CV.pdf" download="Zohaib_Umer_CV.pdf" variant="secondary">
+            Download Resume <Download size={18} />
+          </GlowingButton>
         </motion.div>
       </div>
     </section>

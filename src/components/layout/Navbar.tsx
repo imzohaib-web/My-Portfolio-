@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 const links = [
   { name: "About", href: "#about" },
@@ -75,6 +75,17 @@ export function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[var(--color-neon-cyan)] transition-all group-hover:w-full" />
               </motion.a>
             ))}
+
+            <motion.a
+              href="/resume/Zohaib_Umer_CV.pdf"
+              download="Zohaib_Umer_CV.pdf"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * links.length }}
+              className="text-xs px-3.5 py-1.5 rounded-full border border-[var(--color-neon-cyan)] bg-[rgba(0,255,255,0.05)] text-white hover:bg-[rgba(0,255,255,0.15)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] transition-all flex items-center gap-1.5 font-medium"
+            >
+              Resume <Download size={13} />
+            </motion.a>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -122,6 +133,18 @@ export function Navbar() {
                     <span className="absolute left-0 -bottom-2 w-0 h-[2px] bg-[var(--color-neon-cyan)] transition-all duration-300 group-hover:w-1/2" />
                   </motion.a>
                 ))}
+
+                <motion.a
+                  href="/resume/Zohaib_Umer_CV.pdf"
+                  download="Zohaib_Umer_CV.pdf"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + links.length * 0.1 }}
+                  className="mt-4 inline-flex items-center gap-2 text-lg font-medium text-[var(--color-neon-cyan)] hover:text-white transition-all w-fit"
+                  onClick={closeMenu}
+                >
+                  Download Resume <Download size={18} />
+                </motion.a>
               </nav>
             </motion.div>
           </motion.div>

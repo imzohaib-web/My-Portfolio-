@@ -10,7 +10,7 @@ interface GlowingButtonProps {
   className?: string;
   variant?: "primary" | "secondary";
   href?: string;
-  download?: boolean;
+  download?: boolean | string;
 }
 
 export function GlowingButton({ children, onClick, className, variant = "primary", href, download }: GlowingButtonProps) {
