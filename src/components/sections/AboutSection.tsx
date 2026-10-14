@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { SectionHeading } from "../ui/SectionHeading";
 import { GlassCard } from "../ui/GlassCard";
-import { Code2, BrainCircuit, Rocket } from "lucide-react";
+import { Code2, BrainCircuit } from "lucide-react";
 
 export function AboutSection() {
   const highlights = [
