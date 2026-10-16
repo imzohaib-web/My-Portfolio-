@@ -1,25 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const animationFrame = requestAnimationFrame(() => {
-      setIsMounted(true);
-    });
+    if (typeof window === "undefined") return;
 
     const updateMousePosition = (e: MouseEvent) => {
+      // Disable on touch / coarse pointer devices
+      if (window.matchMedia("(pointer: coarse)").matches) return;
+
       setMousePosition({ x: e.clientX, y: e.clientY });
+      setHasMoved(true);
+      document.documentElement.classList.add("custom-cursor-active");
     };
 
     const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (window.getComputedStyle(target).cursor === 'pointer' || target.tagName.toLowerCase() === 'a' || target.tagName.toLowerCase() === 'button' || target.closest('a') || target.closest('button')) {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (
+        window.getComputedStyle(target).cursor === "pointer" ||
+        target.tagName.toLowerCase() === "a" ||
+        target.tagName.toLowerCase() === "button" ||
+        target.closest("a") ||
+        target.closest("button")
+      ) {
         setIsHovering(true);
       } else {
         setIsHovering(false);
@@ -30,13 +41,13 @@ export function CustomCursor() {
     window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
-      cancelAnimationFrame(animationFrame);
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mouseover", handleMouseOver);
+      document.documentElement.classList.remove("custom-cursor-active");
     };
   }, []);
 
-  if (!isMounted || (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches)) {
+  if (!hasMoved || shouldReduceMotion) {
     return null;
   }
 
@@ -50,7 +61,7 @@ export function CustomCursor() {
           scale: isHovering ? 1.5 : 1,
           backgroundColor: isHovering ? "rgba(0, 255, 255, 0.1)" : "transparent",
         }}
-        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}
+        transition={{ type: "spring", stiffness: 250, damping: 20, mass: 0.3 }}
       />
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--color-neon-purple)] pointer-events-none z-[10000]"
@@ -59,7 +70,7 @@ export function CustomCursor() {
           y: mousePosition.y - 4,
           scale: isHovering ? 0 : 1,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 20, mass: 0.2 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.1 }}
       />
     </>
   );

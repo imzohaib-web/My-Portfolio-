@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -8,6 +8,11 @@ import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -23,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} antialiased selection:bg-[rgba(176,38,255,0.5)] selection:text-white`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased selection:bg-[rgba(176,38,255,0.5)] selection:text-white`}>
         <CustomCursor />
         <AnimatedBackground />
         <Navbar />
