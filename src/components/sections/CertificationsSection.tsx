@@ -16,7 +16,7 @@ const certs = [
 
 export function CertificationsSection() {
   return (
-    <section className="py-12 md:py-16 relative z-10">
+    <section id="milestones" className="py-12 md:py-16 relative z-10">
       <div className="container mx-auto px-6">
         <SectionHeading title="Certifications" subtitle="Continuous learning in AI and Software Engineering." />
         
