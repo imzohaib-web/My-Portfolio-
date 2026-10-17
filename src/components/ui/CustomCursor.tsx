@@ -1,77 +1,121 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [hasMoved, setHasMoved] = useState(false);
+  const [isIdle, setIsIdle] = useState(false);
+  const [isOverBlockedElement, setIsOverBlockedElement] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const updateMousePosition = (e: MouseEvent) => {
-      // Disable on touch / coarse pointer devices
-      if (window.matchMedia("(pointer: coarse)").matches) return;
+    // Check pointer capabilities
+    const finePointer = window.matchMedia("(pointer: fine)");
+    if (!finePointer.matches || shouldReduceMotion) return;
 
+    const handleTouchStart = () => {
+      setIsTouch(true);
+      setHasMoved(false);
+    };
+
+    const resetIdleTimer = () => {
+      setIsIdle(false);
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = setTimeout(() => {
+        setIsIdle(true);
+      }, 2500);
+    };
+
+    const updateMousePosition = (e: MouseEvent) => {
+      if (isTouch) return;
       setMousePosition({ x: e.clientX, y: e.clientY });
       setHasMoved(true);
-      document.documentElement.classList.add("custom-cursor-active");
+      resetIdleTimer();
+
+      // Check if cursor is over iframes or lightbox images
+      const target = e.target as HTMLElement | null;
+      if (target) {
+        const isBlocked =
+          target.tagName === "IFRAME" ||
+          !!target.closest("iframe") ||
+          !!target.closest("[data-lightbox]") ||
+          (target.tagName === "IMG" && !!target.closest("[data-lightbox]"));
+
+        setIsOverBlockedElement(isBlocked);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      setHasMoved(false);
+      setIsIdle(true);
+      setMousePosition({ x: -100, y: -100 });
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      if (
-        window.getComputedStyle(target).cursor === "pointer" ||
-        target.tagName.toLowerCase() === "a" ||
-        target.tagName.toLowerCase() === "button" ||
-        target.closest("a") ||
-        target.closest("button")
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+
+      const isBlocked =
+        target.tagName === "IFRAME" ||
+        !!target.closest("iframe") ||
+        !!target.closest("[data-lightbox]");
+
+      setIsOverBlockedElement(isBlocked);
+
+      const interactive =
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.tagName === "SELECT" ||
+        !!target.closest("a, button, input, textarea, select, [role='button']");
+
+      setIsHovering(interactive);
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mouseover", handleMouseOver);
-      document.documentElement.classList.remove("custom-cursor-active");
+      window.removeEventListener("touchstart", handleTouchStart);
+      document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     };
-  }, []);
+  }, [shouldReduceMotion, isTouch]);
 
-  if (!hasMoved || shouldReduceMotion) {
+  if (
+    shouldReduceMotion ||
+    !hasMoved ||
+    isTouch ||
+    isIdle ||
+    isOverBlockedElement
+  ) {
     return null;
   }
 
   return (
-    <>
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--color-neon-cyan)] pointer-events-none z-[9999] mix-blend-screen"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-          scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? "rgba(0, 255, 255, 0.1)" : "transparent",
-        }}
-        transition={{ type: "spring", stiffness: 250, damping: 20, mass: 0.3 }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--color-neon-purple)] pointer-events-none z-[10000]"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: isHovering ? 0 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.1 }}
-      />
-    </>
+    <motion.div
+      aria-hidden="true"
+      className="pointer-events-none fixed top-0 left-0 z-[9999] h-7 w-7 rounded-full border border-[var(--accent-primary)] mix-blend-difference"
+      animate={{
+        x: mousePosition.x - 14,
+        y: mousePosition.y - 14,
+        scale: isHovering ? 1.35 : 1,
+        opacity: isHovering ? 0.45 : 0.65,
+      }}
+      transition={{ type: "spring", stiffness: 350, damping: 25, mass: 0.2 }}
+    />
   );
 }
