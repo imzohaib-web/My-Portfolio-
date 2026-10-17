@@ -9,14 +9,17 @@ import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://zohaibumer.dev"),
   title: "Zohaib Umer | AI Engineer & Full Stack Developer",
   description: "Portfolio of Zohaib Umer, showcasing expertise in React, Next.js, FastAPI, LangChain, and Generative AI systems.",
 };

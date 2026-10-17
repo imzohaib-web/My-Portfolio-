@@ -1,35 +1,80 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu, X, Download } from "lucide-react";
+import { Container } from "@/components/layout/Container";
 
 const links = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Milestones", href: "#milestones" },
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
+  { name: "Milestones", href: "#milestones" },
   { name: "Contact", href: "#contact" },
 ];
 
+const sectionIds = ["projects", "experience", "skills", "milestones", "contact"];
+
+function NavLink({
+  href,
+  name,
+  isActive,
+  className,
+  onClick,
+}: {
+  href: string;
+  name: string;
+  isActive: boolean;
+  className?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      className={cn(
+        "group relative py-1 text-sm text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm",
+        isActive && "text-white",
+        className
+      )}
+    >
+      {name}
+      <span
+        className={cn(
+          "absolute -bottom-0.5 left-0 h-px bg-white/70 transition-all duration-200",
+          isActive ? "w-full" : "w-0 group-hover:w-full"
+        )}
+        aria-hidden="true"
+      />
+    </a>
+  );
+}
+
 export function Navbar() {
+  const shouldReduceMotion = useReducedMotion();
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
 
+  const resolveHref = (href: string) => {
+    if (isHomePage) return href;
+    return `/${href}`;
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // IntersectionObserver to track active section for underline
   useEffect(() => {
-    const sectionIds = ["about", "skills", "milestones", "projects", "experience", "contact"];
+    if (!isHomePage) return;
+
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
@@ -44,111 +89,99 @@ export function Navbar() {
           setActiveSection(visible[0].target.id);
         }
       },
-      {
-        rootMargin: "-20% 0px -55% 0px",
-        threshold: [0.1, 0.3, 0.6],
-      }
+      { rootMargin: "-20% 0px -55% 0px", threshold: [0.1, 0.3, 0.6] }
     );
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [isHomePage]);
 
-  // Prevent background scrolling when mobile drawer is open
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
-  const closeMenu = () => setIsOpen(false);
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, closeMenu]);
 
   return (
     <>
       <motion.header
-        initial={{ y: -100 }}
+        initial={shouldReduceMotion ? false : { y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-50 h-20 transition-colors duration-300",
           scrolled || isOpen
-            ? "glass py-3.5 shadow-[0_4px_30px_rgba(0,255,255,0.05)] border-b border-[rgba(255,255,255,0.08)] bg-[#050505]/80 backdrop-blur-md"
-            : "py-4 md:py-6 bg-gradient-to-b from-black/70 to-transparent md:bg-transparent"
+            ? "border-b border-white/5 bg-black/50 backdrop-blur-md"
+            : "bg-transparent"
         )}
       >
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl flex items-center justify-between">
-          {/* Logo: gradient rounded square with "Z" + the wordmark "Zohaib Umer" (hidden < sm) */}
+        <Container className="grid h-full grid-cols-[1fr_auto_1fr] items-center">
           <a
-            href="#"
-            className="text-white relative z-10 flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0ff] rounded-lg p-1"
+            href={isHomePage ? "#hero" : "/#hero"}
+            className="justify-self-start flex items-center gap-2.5 rounded-lg p-1 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             onClick={closeMenu}
-            aria-label="Zohaib Umer Portfolio Home"
+            aria-label="Zohaib Umer — home"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0ff] to-[#b026ff] flex items-center justify-center shadow-[0_0_15px_rgba(0,255,255,0.35)] flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
-              <span className="text-white font-extrabold text-base select-none">Z</span>
+            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)] shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+              <span className="select-none text-base font-extrabold text-white">Z</span>
             </div>
-            <span className="font-semibold tracking-tight text-white hidden sm:inline transition-colors group-hover:text-zinc-200 text-base">
-              Zohaib Umer
-            </span>
+            <span className="hidden text-base font-semibold tracking-tight sm:inline">Zohaib Umer</span>
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-8" aria-label="Main navigation">
-            {links.map((link) => {
-              const isActive = activeSection === link.href.substring(1);
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors relative py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0ff] rounded-sm group",
-                    isActive ? "text-white" : "text-zinc-400 hover:text-white"
-                  )}
-                >
-                  {link.name}
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeNavUnderline"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#0ff] shadow-[0_0_8px_#0ff]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  {!isActive && (
-                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-white/40 transition-all duration-200 group-hover:w-full" />
-                  )}
-                </a>
-              );
-            })}
+          <nav
+            className="hidden items-center justify-center gap-7 md:flex lg:gap-8"
+            aria-label="Main navigation"
+          >
+            {links.map((link) => (
+              <NavLink
+                key={link.name}
+                name={link.name}
+                href={resolveHref(link.href)}
+                isActive={isHomePage && activeSection === link.href.substring(1)}
+              />
+            ))}
           </nav>
 
-          {/* Desktop Right Side: Available for new opportunities pill */}
-          <div className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 text-xs font-medium backdrop-blur-sm select-none shadow-[0_0_12px_rgba(16,185,129,0.12)]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span>Available for new opportunities</span>
-          </div>
+          <div className="justify-self-end flex items-center gap-3">
+            <div
+              className="hidden md:inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 select-none"
+              role="status"
+            >
+              <span className="relative flex h-2 w-2">
+                {!shouldReduceMotion && (
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                )}
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              <span>Available for new opportunities</span>
+            </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <button
-            className="md:hidden relative z-50 p-2.5 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center transition-all active:scale-95 text-gray-300 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0ff]"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? (
-              <X size={20} className="text-[#b026ff]" />
-            ) : (
-              <Menu size={20} className="text-[#0ff]" />
-            )}
-          </button>
-        </div>
+            <button
+              type="button"
+              className="md:hidden flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 backdrop-blur-md hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              onClick={() => setIsOpen((o) => !o)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-drawer"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </Container>
       </motion.header>
 
-      {/* Mobile Navigation Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -158,60 +191,46 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
             onClick={closeMenu}
+            aria-hidden={!isOpen}
           >
             <motion.div
+              id="mobile-nav-drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-0 right-0 w-[80vw] max-w-sm h-full bg-[#09090b] border-l border-white/10 shadow-2xl flex flex-col justify-between py-12 px-8"
+              className="absolute top-0 right-0 flex h-full w-[80vw] max-w-sm flex-col justify-between border-l border-white/10 bg-[var(--bg)] py-12 px-8 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="pt-8">
-                {/* Available status pill in mobile drawer */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 text-xs font-medium mb-8">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                  </span>
-                  <span>Available for work</span>
-                </div>
-
                 <nav className="flex flex-col gap-5">
-                  {links.map((link, i) => {
-                    const isActive = activeSection === link.href.substring(1);
-                    return (
-                      <motion.a
-                        key={link.name}
-                        href={link.href}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.05 + i * 0.05 }}
-                        className={cn(
-                          "text-xl font-medium transition-all py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0ff] rounded-md",
-                          isActive
-                            ? "text-[#0ff] pl-2 font-semibold"
-                            : "text-zinc-300 hover:text-white hover:pl-2"
-                        )}
-                        onClick={closeMenu}
-                      >
-                        {link.name}
-                      </motion.a>
-                    );
-                  })}
+                  {links.map((link) => (
+                    <NavLink
+                      key={link.name}
+                      name={link.name}
+                      href={resolveHref(link.href)}
+                      isActive={isHomePage && activeSection === link.href.substring(1)}
+                      className="text-lg"
+                      onClick={closeMenu}
+                    />
+                  ))}
                 </nav>
               </div>
 
-              {/* Mobile Drawer Resume Button */}
-              <div className="pt-6 border-t border-white/10">
+              <div className="border-t border-white/10 pt-6">
                 <a
                   href="/resume/Zohaib_Umer_CV.pdf"
                   download="Zohaib_Umer_CV.pdf"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] w-full px-5 py-2.5 rounded-xl border border-[#0ff]/40 bg-[#0ff]/10 text-white hover:bg-[#0ff]/20 font-medium text-sm transition-all shadow-[0_0_15px_rgba(0,255,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0ff]"
+                  type="application/pdf"
+                  rel="noopener"
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
                   onClick={closeMenu}
                 >
                   <span>Resume</span>
-                  <Download size={16} className="text-[#0ff]" />
+                  <Download size={16} aria-hidden="true" />
                 </a>
               </div>
             </motion.div>
