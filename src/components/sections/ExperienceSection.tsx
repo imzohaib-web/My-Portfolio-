@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 
 export function ExperienceSection() {
   return (
     <section id="experience" className="py-12 md:py-16 relative z-10">
-      <div className="container mx-auto px-6">
+      <Container>
         <SectionHeading title="Experience" />
         
         <div className="relative border-l-2 border-[rgba(255,255,255,0.1)] ml-4 md:ml-6 pb-4 space-y-12">
@@ -73,7 +74,7 @@ export function ExperienceSection() {
             </ul>
           </motion.div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

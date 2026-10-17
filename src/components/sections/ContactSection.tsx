@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { GlowingButton } from "../ui/GlowingButton";
 import { Mail, MapPin } from "lucide-react";
@@ -8,7 +9,7 @@ import { Mail, MapPin } from "lucide-react";
 export function ContactSection() {
   return (
     <section id="contact" className="py-12 md:py-16 relative z-10">
-      <div className="container mx-auto px-6 max-w-4xl text-center">
+      <Container className="max-w-4xl text-center">
         <SectionHeading title="Get In Touch" subtitle="Let's build something amazing together." />
         
         <motion.div
@@ -43,7 +44,7 @@ export function ContactSection() {
             Say Hello <Mail size={18} />
           </GlowingButton>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }

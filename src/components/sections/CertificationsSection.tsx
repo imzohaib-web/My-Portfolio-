@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { GlassCard } from "../ui/GlassCard";
 import { Award } from "lucide-react";
@@ -17,7 +18,7 @@ const certs = [
 export function CertificationsSection() {
   return (
     <section id="milestones" className="py-12 md:py-16 relative z-10">
-      <div className="container mx-auto px-6">
+      <Container>
         <SectionHeading title="Certifications" subtitle="Continuous learning in AI and Software Engineering." />
         
         <div className="grid md:grid-cols-2 gap-4">
@@ -38,7 +39,7 @@ export function CertificationsSection() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
