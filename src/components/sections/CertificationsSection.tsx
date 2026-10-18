@@ -1,45 +1,136 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
 import { Container } from "@/components/layout/Container";
-import { SectionHeading } from "../ui/SectionHeading";
-import { GlassCard } from "../ui/GlassCard";
-import { Award } from "lucide-react";
-
-const certs = [
-  "Generative AI & Chatbot Development – Bano Qabil, 2026",
-  "Programming for Everybody (Python) – Coursera, 2025",
-  "AI For Everyone – Coursera, 2025",
-  "Prompt Engineering for ChatGPT – Coursera, 2025",
-  "Career Essentials in Generative AI – LinkedIn & Microsoft, 2024",
-  "English Access Scholarship Program 2024-25"
-];
+import { Section } from "@/components/layout/Section";
+import { certifications } from "@/data/certifications";
+import { CertificateViewer } from "@/components/certifications/CertificateViewer";
+import { CertificateList } from "@/components/certifications/CertificateList";
+import { CertificateLightbox } from "@/components/certifications/CertificateLightbox";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function CertificationsSection() {
+  const shouldReduceMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  const earnedCount = certifications.filter((c) => c.status === "earned").length;
+  const pendingCount = certifications.filter((c) => c.status === "pending").length;
+
+  const handleOpenLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setIsLightboxOpen(false);
+  };
+
+  const headerMotion = {
+    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.45, ease: "easeOut" as const },
+  };
+
   return (
-    <section id="milestones" className="py-12 md:py-16 relative z-10">
-      <Container>
-        <SectionHeading title="Certifications" subtitle="Continuous learning in AI and Software Engineering." />
-        
-        <div className="grid md:grid-cols-2 gap-4">
-          {certs.map((cert, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-            >
-              <GlassCard className="flex items-center gap-4 p-4 md:p-6" hoverEffect={true}>
-                <div className="bg-[rgba(176,38,255,0.1)] p-3 rounded-xl text-[var(--color-neon-purple)]">
-                  <Award size={24} />
-                </div>
-                <h3 className="text-white font-medium">{cert}</h3>
-              </GlassCard>
-            </motion.div>
-          ))}
+    <Section id="certifications" className="z-10 relative scroll-mt-24">
+      {/* Backwards-compatibility alias for #milestones */}
+      <span id="milestones" className="absolute -top-24 pointer-events-none" aria-hidden="true" />
+
+      {/* Background Ambience & Grid */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,#000_15%,transparent_100%)] opacity-30"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-[12%] top-[18%] h-[min(360px,50vw)] w-[min(360px,50vw)] rounded-full bg-violet-600 opacity-[0.11] blur-[120px] [mask-image:radial-gradient(circle,#000_30%,transparent_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-[10%] top-[25%] h-[min(380px,52vw)] w-[min(380px,52vw)] rounded-full bg-cyan-400 opacity-[0.11] blur-[120px] [mask-image:radial-gradient(circle,#000_30%,transparent_70%)]"
+      />
+
+      <Container className="relative z-10">
+        {/* Header: Eyebrow, H2, Subtitle, Count on right, 1px gradient-fade divider */}
+        <motion.div {...headerMotion}>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div className="max-w-3xl">
+              <p className="font-mono text-[13px] tracking-[0.22em] uppercase text-[var(--accent-primary)]">
+                {"// 04 · CERTIFICATIONS"}
+              </p>
+              <h2
+                id="certifications-heading"
+                className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight tracking-[-0.02em] text-white"
+              >
+                Certifications
+              </h2>
+              <p className="mt-4 max-w-[60ch] text-base text-zinc-300 md:text-lg">
+                Continuous learning in AI and software engineering.
+              </p>
+            </div>
+
+            {/* Muted count on the right (md+) */}
+            <div className="hidden md:block font-mono text-xs text-zinc-400 mb-1 shrink-0">
+              {earnedCount} verified · {pendingCount} pending
+            </div>
+          </div>
+
+          {/* 1px gradient-fade divider with mb-10 */}
+          <div
+            aria-hidden="true"
+            className="mt-8 mb-10 h-px w-full bg-gradient-to-r from-[var(--accent-primary)] via-[var(--accent-primary)]/40 to-transparent"
+          />
+        </motion.div>
+
+        {/* Layout: lg+ 1.15fr / 1fr grid, below lg stacked */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 items-stretch">
+          {/* Left: Viewer Carousel */}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="w-full flex flex-col"
+          >
+            <CertificateViewer
+              certifications={certifications}
+              activeIndex={activeIndex}
+              onSelectIndex={setActiveIndex}
+              onOpenLightbox={handleOpenLightbox}
+              triggerRef={triggerRef}
+            />
+          </motion.div>
+
+          {/* Right: Compact Row List */}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.08, ease: "easeOut" }}
+            className="w-full flex flex-col justify-center"
+          >
+            <CertificateList
+              certifications={certifications}
+              activeIndex={activeIndex}
+              onSelectIndex={setActiveIndex}
+            />
+          </motion.div>
         </div>
       </Container>
-    </section>
+
+      {/* Lightbox Modal */}
+      <CertificateLightbox
+        isOpen={isLightboxOpen}
+        certifications={certifications}
+        currentIndex={lightboxIndex}
+        onClose={handleCloseLightbox}
+        onNavigate={setLightboxIndex}
+        triggerRef={triggerRef}
+      />
+    </Section>
   );
 }
