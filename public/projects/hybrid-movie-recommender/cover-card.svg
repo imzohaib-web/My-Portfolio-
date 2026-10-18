@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480">
+  <defs>
+    <radialGradient id="cardGlow-hybrid-movie-recommender" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="cardGrid-hybrid-movie-recommender" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="#07080d" />
+  <rect width="1200" height="480" fill="url(#cardGrid-hybrid-movie-recommender)" />
+  <circle cx="600" cy="240" r="280" fill="url(#cardGlow-hybrid-movie-recommender)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="218" y1="240" x2="308" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="304" cy="240" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="534" y1="240" x2="624" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="620" cy="240" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="892" y1="240" x2="982" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="978" cy="240" r="5" fill="#f59e0b" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="48" y="190" width="170" height="100" rx="20" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="133" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Cosine</text>
+    </g>
+
+    <g>
+      <rect x="308" y="190" width="226" height="100" rx="20" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="421" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Sentiment</text>
+    </g>
+
+    <g>
+      <rect x="624" y="190" width="268" height="100" rx="20" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="758" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">60/40 Blend</text>
+    </g>
+
+    <g>
+      <rect x="982" y="190" width="170" height="100" rx="20" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1067" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Picks</text>
+    </g>
+</svg>

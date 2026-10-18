@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480">
+  <defs>
+    <radialGradient id="cardGlow-enterprise-lms" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="cardGrid-enterprise-lms" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="#07080d" />
+  <rect width="1200" height="480" fill="url(#cardGrid-enterprise-lms)" />
+  <circle cx="600" cy="240" r="280" fill="url(#cardGlow-enterprise-lms)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="218" y1="240" x2="282.3333333333333" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="278.3333333333333" cy="240" r="5" fill="#34d399" />
+    </g>
+
+    <g>
+      <line x1="466.3333333333333" y1="240" x2="530.6666666666666" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="526.6666666666666" cy="240" r="5" fill="#34d399" />
+    </g>
+
+    <g>
+      <line x1="798.6666666666666" y1="240" x2="863" y2="240" stroke="#71717a" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="859" cy="240" r="5" fill="#34d399" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="48" y="190" width="170" height="100" rx="20" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="133" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Auth</text>
+    </g>
+
+    <g>
+      <rect x="282.3333333333333" y="190" width="184" height="100" rx="20" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="374.3333333333333" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Courses</text>
+    </g>
+
+    <g>
+      <rect x="530.6666666666666" y="190" width="268" height="100" rx="20" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="664.6666666666666" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Assessments</text>
+    </g>
+
+    <g>
+      <rect x="863" y="190" width="289" height="100" rx="20" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1007.5" y="251" text-anchor="middle" fill="#f4f4f5" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="34" letter-spacing="0.03em">Certificates</text>
+    </g>
+</svg>

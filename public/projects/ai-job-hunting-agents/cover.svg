@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640">
+  <defs>
+    <radialGradient id="coverGlow-ai-job-hunting-agents" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="coverGrid-ai-job-hunting-agents" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="640" fill="#07080d" />
+  <rect width="1600" height="640" fill="url(#coverGrid-ai-job-hunting-agents)" />
+  <circle cx="800" cy="320" r="340" fill="url(#coverGlow-ai-job-hunting-agents)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="271" y1="320" x2="376.25" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="372.25" cy="320" r="5" fill="#a855f7" />
+    </g>
+
+    <g>
+      <line x1="595.25" y1="320" x2="700.5" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="696.5" cy="320" r="5" fill="#a855f7" />
+    </g>
+
+    <g>
+      <line x1="919.5" y1="320" x2="1024.75" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1020.75" cy="320" r="5" fill="#a855f7" />
+    </g>
+
+    <g>
+      <line x1="1243.75" y1="320" x2="1349" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1345" cy="320" r="5" fill="#a855f7" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="52" y="265" width="219" height="110" rx="18" fill="#a855f7" fill-opacity="0.20" stroke="#a855f7" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="161.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Job Crawler</text>
+      <text x="161.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Multi-Board Scrape</text>
+    </g>
+
+    <g>
+      <rect x="376.25" y="265" width="219" height="110" rx="18" fill="#a855f7" fill-opacity="0.20" stroke="#a855f7" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="485.75" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Fit Analyzer</text>
+      <text x="485.75" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Pinecone Vector</text>
+    </g>
+
+    <g>
+      <rect x="700.5" y="265" width="219" height="110" rx="18" fill="#a855f7" fill-opacity="0.20" stroke="#a855f7" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="810" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Resume Agent</text>
+      <text x="810" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">LangGraph Flow</text>
+    </g>
+
+    <g>
+      <rect x="1024.75" y="265" width="219" height="110" rx="18" fill="#a855f7" fill-opacity="0.20" stroke="#a855f7" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1134.25" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Letter Agent</text>
+      <text x="1134.25" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Custom Cover</text>
+    </g>
+
+    <g>
+      <rect x="1349" y="265" width="199" height="110" rx="18" fill="#a855f7" fill-opacity="0.20" stroke="#a855f7" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1448.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Dispatch</text>
+      <text x="1448.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Status Dashboard</text>
+    </g>
+</svg>

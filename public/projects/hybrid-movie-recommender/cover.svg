@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640">
+  <defs>
+    <radialGradient id="coverGlow-hybrid-movie-recommender" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="coverGrid-hybrid-movie-recommender" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="640" fill="#07080d" />
+  <rect width="1600" height="640" fill="url(#coverGrid-hybrid-movie-recommender)" />
+  <circle cx="800" cy="320" r="340" fill="url(#coverGlow-hybrid-movie-recommender)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="271" y1="320" x2="399.75" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="395.75" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="588.75" y1="320" x2="717.5" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="713.5" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="897.5" y1="320" x2="1026.25" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1022.25" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="1230.25" y1="320" x2="1359" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1355" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="52" y="265" width="219" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="161.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">User History</text>
+      <text x="161.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Rating Vectors</text>
+    </g>
+
+    <g>
+      <rect x="399.75" y="265" width="189" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="494.25" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Cosine Sim</text>
+      <text x="494.25" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">TF-IDF Metadata</text>
+    </g>
+
+    <g>
+      <rect x="717.5" y="265" width="180" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="807.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Sentiment</text>
+      <text x="807.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Review Mining</text>
+    </g>
+
+    <g>
+      <rect x="1026.25" y="265" width="204" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1128.25" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">60/40 Blend</text>
+      <text x="1128.25" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Ensemble Model</text>
+    </g>
+
+    <g>
+      <rect x="1359" y="265" width="189" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1453.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Flask API</text>
+      <text x="1453.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Top Picks Query</text>
+    </g>
+</svg>

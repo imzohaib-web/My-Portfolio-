@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640">
+  <defs>
+    <radialGradient id="coverGlow-synthex-ai" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="coverGrid-synthex-ai" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="640" fill="#07080d" />
+  <rect width="1600" height="640" fill="url(#coverGrid-synthex-ai)" />
+  <circle cx="800" cy="320" r="340" fill="url(#coverGlow-synthex-ai)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="256" y1="320" x2="495.66666666666663" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="491.66666666666663" cy="320" r="5" fill="#22d3ee" />
+    </g>
+
+    <g>
+      <line x1="699.6666666666666" y1="320" x2="939.3333333333333" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="935.3333333333333" cy="320" r="5" fill="#22d3ee" />
+    </g>
+
+    <g>
+      <line x1="1119.3333333333333" y1="320" x2="1359" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1355" cy="320" r="5" fill="#22d3ee" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="52" y="265" width="204" height="110" rx="18" fill="#22d3ee" fill-opacity="0.20" stroke="#22d3ee" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="154" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">React 19 UI</text>
+      <text x="154" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Vite Client</text>
+    </g>
+
+    <g>
+      <rect x="495.66666666666663" y="265" width="204" height="110" rx="18" fill="#22d3ee" fill-opacity="0.20" stroke="#22d3ee" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="597.6666666666666" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Express API</text>
+      <text x="597.6666666666666" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">JWT Auth Layer</text>
+    </g>
+
+    <g>
+      <rect x="939.3333333333333" y="265" width="180" height="110" rx="18" fill="#22d3ee" fill-opacity="0.20" stroke="#22d3ee" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1029.3333333333333" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">MongoDB</text>
+      <text x="1029.3333333333333" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Chat History</text>
+    </g>
+
+    <g>
+      <rect x="1359" y="265" width="189" height="110" rx="18" fill="#22d3ee" fill-opacity="0.20" stroke="#22d3ee" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1453.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Gemini API</text>
+      <text x="1453.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Token Streaming</text>
+    </g>
+</svg>

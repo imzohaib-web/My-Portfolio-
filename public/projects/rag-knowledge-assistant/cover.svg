@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640">
+  <defs>
+    <radialGradient id="coverGlow-rag-knowledge-assistant" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="coverGrid-rag-knowledge-assistant" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="640" fill="#07080d" />
+  <rect width="1600" height="640" fill="url(#coverGrid-rag-knowledge-assistant)" />
+  <circle cx="800" cy="320" r="340" fill="url(#coverGlow-rag-knowledge-assistant)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="232" y1="320" x2="359.5" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="355.5" cy="320" r="5" fill="#34d399" />
+    </g>
+
+    <g>
+      <line x1="558.5" y1="320" x2="686" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="682" cy="320" r="5" fill="#34d399" />
+    </g>
+
+    <g>
+      <line x1="905" y1="320" x2="1032.5" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1028.5" cy="320" r="5" fill="#34d399" />
+    </g>
+
+    <g>
+      <line x1="1231.5" y1="320" x2="1359" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1355" cy="320" r="5" fill="#34d399" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="52" y="265" width="180" height="110" rx="18" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="142" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Documents</text>
+      <text x="142" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">PDF & Markdown</text>
+    </g>
+
+    <g>
+      <rect x="359.5" y="265" width="199" height="110" rx="18" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="459" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Chunking</text>
+      <text x="459" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Dense Embeddings</text>
+    </g>
+
+    <g>
+      <rect x="686" y="265" width="219" height="110" rx="18" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="795.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Vector Store</text>
+      <text x="795.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Chroma Similarity</text>
+    </g>
+
+    <g>
+      <rect x="1032.5" y="265" width="199" height="110" rx="18" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1132" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Retriever</text>
+      <text x="1132" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Semantic Context</text>
+    </g>
+
+    <g>
+      <rect x="1359" y="265" width="189" height="110" rx="18" fill="#34d399" fill-opacity="0.20" stroke="#34d399" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1453.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Synthesis</text>
+      <text x="1453.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Grounded Output</text>
+    </g>
+</svg>

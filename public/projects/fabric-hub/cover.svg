@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" width="1600" height="640">
+  <defs>
+    <radialGradient id="coverGlow-fabric-hub" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="coverGrid-fabric-hub" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="640" fill="#07080d" />
+  <rect width="1600" height="640" fill="url(#coverGrid-fabric-hub)" />
+  <circle cx="800" cy="320" r="340" fill="url(#coverGlow-fabric-hub)" />
+
+  <!-- Connecting Arrows -->
+  
+    <g>
+      <line x1="271" y1="320" x2="381" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="377" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="585" y1="320" x2="695" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="691" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="914" y1="320" x2="1024" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1020" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+    <g>
+      <line x1="1258" y1="320" x2="1368" y2="320" stroke="#52525b" stroke-width="3" stroke-dasharray="6,6" />
+      <circle cx="1364" cy="320" r="5" fill="#f59e0b" />
+    </g>
+
+  <!-- Nodes -->
+  
+    <g>
+      <rect x="52" y="265" width="219" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="161.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">React Client</text>
+      <text x="161.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Cart & Wishlist</text>
+    </g>
+
+    <g>
+      <rect x="381" y="265" width="204" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="483" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">Express API</text>
+      <text x="483" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">REST Controllers</text>
+    </g>
+
+    <g>
+      <rect x="695" y="265" width="219" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="804.5" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">httpOnly JWT</text>
+      <text x="804.5" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Secure Auth</text>
+    </g>
+
+    <g>
+      <rect x="1024" y="265" width="234" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1141" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">6 Collections</text>
+      <text x="1141" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Mongoose Schemas</text>
+    </g>
+
+    <g>
+      <rect x="1368" y="265" width="180" height="110" rx="18" fill="#f59e0b" fill-opacity="0.20" stroke="#f59e0b" stroke-opacity="0.70" stroke-width="2.5" />
+      <text x="1458" y="311" text-anchor="middle" fill="#ffffff" font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="700" font-size="24" letter-spacing="0.04em">MongoDB</text>
+      <text x="1458" y="343" text-anchor="middle" fill="#a1a1aa" font-family="Consolas, ui-monospace, monospace" font-size="16">Orders & Users</text>
+    </g>
+</svg>

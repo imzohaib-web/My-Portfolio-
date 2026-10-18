@@ -8,35 +8,40 @@ export const projectAccentStyles: Record<
     chipHover: string;
     cardHover: string;
     link: string;
+    ring: string;
   }
 > = {
   cyan: {
     text: "text-cyan-400",
     badge: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
     chipHover: "group-hover/chip:border-cyan-400/35 group-hover/chip:text-cyan-50",
-    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(34,211,238,0.15)] hover:border-cyan-400/30",
+    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(34,211,238,0.2)] hover:border-cyan-400/40",
     link: "text-cyan-400",
+    ring: "ring-cyan-400/80",
   },
   violet: {
     text: "text-violet-400",
     badge: "text-violet-400 bg-violet-400/10 border-violet-400/30",
     chipHover: "group-hover/chip:border-violet-400/35 group-hover/chip:text-violet-50",
-    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(168,85,247,0.15)] hover:border-violet-400/30",
+    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(168,85,247,0.2)] hover:border-violet-400/40",
     link: "text-violet-400",
+    ring: "ring-violet-400/80",
   },
   emerald: {
     text: "text-emerald-400",
     badge: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
     chipHover: "group-hover/chip:border-emerald-400/35 group-hover/chip:text-emerald-50",
-    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(52,211,153,0.15)] hover:border-emerald-400/30",
+    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(52,211,153,0.2)] hover:border-emerald-400/40",
     link: "text-emerald-400",
+    ring: "ring-emerald-400/80",
   },
   amber: {
     text: "text-amber-400",
     badge: "text-amber-400 bg-amber-400/10 border-amber-400/30",
     chipHover: "group-hover/chip:border-amber-400/35 group-hover/chip:text-amber-50",
-    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(251,191,36,0.15)] hover:border-amber-400/30",
+    cardHover: "hover:shadow-[0_16px_48px_-16px_rgba(251,191,36,0.2)] hover:border-amber-400/40",
     link: "text-amber-400",
+    ring: "ring-amber-400/80",
   },
 };
 
