@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Menu, X, Download } from "lucide-react";
 import { Container } from "@/components/layout/Container";
@@ -11,11 +12,11 @@ const links = [
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
-  { name: "Milestones", href: "#milestones" },
+  { name: "Certifications", href: "#certifications" },
   { name: "Contact", href: "#contact" },
 ];
 
-const sectionIds = ["projects", "experience", "skills", "milestones", "contact"];
+const sectionIds = ["hero", "projects", "experience", "skills", "certifications", "contact"];
 
 function NavLink({
   href,
@@ -60,6 +61,8 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
 
+  const isProjectsPage = pathname === "/projects" || pathname?.startsWith("/projects");
+
   const resolveHref = (href: string) => {
     if (isHomePage) return href;
     return `/${href}`;
@@ -83,13 +86,13 @@ export function Navbar() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          setActiveSection(visible[0].target.id);
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
       },
-      { rootMargin: "-20% 0px -55% 0px", threshold: [0.1, 0.3, 0.6] }
+      { rootMargin: "-45% 0px -50% 0px" }
     );
 
     elements.forEach((el) => observer.observe(el));
@@ -128,8 +131,8 @@ export function Navbar() {
         )}
       >
         <Container className="grid h-full grid-cols-[1fr_auto_1fr] items-center">
-          <a
-            href={isHomePage ? "#hero" : "/#hero"}
+          <Link
+            href="/"
             className="justify-self-start flex items-center gap-2.5 rounded-lg p-1 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             onClick={closeMenu}
             aria-label="Zohaib Umer — home"
@@ -138,20 +141,26 @@ export function Navbar() {
               <span className="select-none text-base font-extrabold text-white">Z</span>
             </div>
             <span className="hidden text-base font-semibold tracking-tight sm:inline">Zohaib Umer</span>
-          </a>
+          </Link>
 
           <nav
             className="hidden items-center justify-center gap-7 md:flex lg:gap-8"
             aria-label="Main navigation"
           >
-            {links.map((link) => (
-              <NavLink
-                key={link.name}
-                name={link.name}
-                href={resolveHref(link.href)}
-                isActive={isHomePage && activeSection === link.href.substring(1)}
-              />
-            ))}
+            {links.map((link) => {
+              const isActive = isProjectsPage
+                ? link.name === "Projects"
+                : isHomePage && activeSection === link.href.substring(1);
+
+              return (
+                <NavLink
+                  key={link.name}
+                  name={link.name}
+                  href={resolveHref(link.href)}
+                  isActive={Boolean(isActive)}
+                />
+              );
+            })}
           </nav>
 
           <div className="justify-self-end flex items-center gap-3">
@@ -207,16 +216,22 @@ export function Navbar() {
             >
               <div className="pt-8">
                 <nav className="flex flex-col gap-5">
-                  {links.map((link) => (
-                    <NavLink
-                      key={link.name}
-                      name={link.name}
-                      href={resolveHref(link.href)}
-                      isActive={isHomePage && activeSection === link.href.substring(1)}
-                      className="text-lg"
-                      onClick={closeMenu}
-                    />
-                  ))}
+                  {links.map((link) => {
+                    const isActive = isProjectsPage
+                      ? link.name === "Projects"
+                      : isHomePage && activeSection === link.href.substring(1);
+
+                    return (
+                      <NavLink
+                        key={link.name}
+                        name={link.name}
+                        href={resolveHref(link.href)}
+                        isActive={Boolean(isActive)}
+                        className="text-lg"
+                        onClick={closeMenu}
+                      />
+                    );
+                  })}
                 </nav>
               </div>
 

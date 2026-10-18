@@ -180,3 +180,87 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #52525b;
 }
+
+@keyframes border-glow-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient-border {
+  position: relative;
+  border-radius: 9999px;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.7), rgba(168, 85, 247, 0.7), rgba(34, 211, 238, 0.7));
+  background-size: 200% 200%;
+  animation: border-glow-shift 4s ease infinite;
+}
+
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0px var(--highlight-color, rgba(34, 211, 238, 0.8));
+  }
+  30% {
+    box-shadow: 0 0 0 4px var(--highlight-color, rgba(34, 211, 238, 0.8)), 0 0 24px var(--highlight-color, rgba(34, 211, 238, 0.4));
+  }
+  100% {
+    box-shadow: 0 0 0 0px transparent;
+  }
+}
+
+.deep-link-highlight {
+  animation: highlight-pulse 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.cert-card,
+.certificate-card,
+.experience-card {
+  position: relative;
+}
+
+.cert-card::before,
+.certificate-card::before,
+.experience-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, 0.35),
+    rgba(168, 85, 247, 0.2),
+    rgba(255, 255, 255, 0.08)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity 200ms ease;
+}
+
+.experience-card:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient-border {
+    animation: none !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+  .deep-link-highlight {
+    animation: none !important;
+    box-shadow: 0 0 0 2px var(--highlight-color, rgba(34, 211, 238, 0.8)) !important;
+  }
+}
+
