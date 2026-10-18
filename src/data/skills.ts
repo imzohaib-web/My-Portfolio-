@@ -1,7 +1,6 @@
-import type { IconType } from "react-icons";
+import type { ComponentType } from "react";
 import {
   SiReact,
-  SiNextdotjs,
   SiTypescript,
   SiJavascript,
   SiHtml5,
@@ -14,18 +13,29 @@ import {
   SiMongodb,
   SiMysql,
   SiPython,
+  SiLangchain,
   SiGithub,
   SiVercel,
   SiRender,
 } from "react-icons/si";
 import { VscCode } from "react-icons/vsc";
-import { HiOutlineSparkles } from "react-icons/hi2";
+import {
+  FolderSearch,
+  Languages,
+  Cpu,
+  BotMessageSquare,
+  Sliders,
+  Boxes,
+  Sparkles,
+} from "lucide-react";
 
 export type SkillAccent = "cyan" | "violet" | "emerald" | "amber";
 
+export type SkillIconComponent = ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
+
 export type Skill = {
   name: string;
-  icon: IconType;
+  icon: SkillIconComponent;
 };
 
 export type SkillCategory = {
@@ -37,7 +47,7 @@ export type SkillCategory = {
 };
 
 /** Generic fallback when no brand icon is mapped */
-export const DefaultSkillIcon = HiOutlineSparkles;
+export const DefaultSkillIcon: SkillIconComponent = Sparkles;
 
 export const skillCategories: SkillCategory[] = [
   {
@@ -47,7 +57,6 @@ export const skillCategories: SkillCategory[] = [
     accent: "cyan",
     skills: [
       { name: "React", icon: SiReact },
-      { name: "Next.js", icon: SiNextdotjs },
       { name: "TypeScript", icon: SiTypescript },
       { name: "JavaScript", icon: SiJavascript },
       { name: "HTML5", icon: SiHtml5 },
@@ -75,14 +84,13 @@ export const skillCategories: SkillCategory[] = [
     description: "RAG, agents and LLM apps",
     accent: "emerald",
     skills: [
-      // TODO: confirm — listed in spec; used across project tags but not in legacy SkillsSection
       { name: "Python", icon: SiPython },
-      { name: "LangChain", icon: DefaultSkillIcon },
-      { name: "LLM APIs", icon: DefaultSkillIcon },
-      { name: "RAG Systems", icon: DefaultSkillIcon },
-      { name: "NLP", icon: DefaultSkillIcon },
-      { name: "Chatbot Development", icon: DefaultSkillIcon },
-      { name: "Recommendation Systems", icon: DefaultSkillIcon },
+      { name: "LangChain", icon: SiLangchain },
+      { name: "LLM APIs", icon: Cpu },
+      { name: "RAG Systems", icon: FolderSearch },
+      { name: "NLP", icon: Languages },
+      { name: "Chatbot Development", icon: BotMessageSquare },
+      { name: "Recommendation Systems", icon: Sliders },
     ],
   },
   {
@@ -92,9 +100,8 @@ export const skillCategories: SkillCategory[] = [
     accent: "amber",
     skills: [
       { name: "Git / GitHub", icon: SiGithub },
-      { name: "VS Code", icon: VscCode },
-      // TODO: confirm exact product naming — legacy portfolio listed "Google stitch"
-      { name: "Google Stitch", icon: DefaultSkillIcon },
+      { name: "Docker & AWS", icon: VscCode },
+      { name: "Google Stitch", icon: Boxes },
       { name: "Vercel", icon: SiVercel },
       { name: "Render", icon: SiRender },
     ],

@@ -52,7 +52,7 @@ export function HeroSection() {
               {...enter(0)}
               className="font-mono text-[13px] tracking-[0.22em] uppercase text-[var(--accent-primary)]"
             >
-              AI Engineer &amp; Full-Stack Developer
+              Software Engineer &amp; Full-Stack Developer
             </motion.span>
 
             <motion.h1

@@ -17,13 +17,13 @@ const BLOCKS: TerminalBlock[] = [
   },
   {
     command: "education",
-    output: "Software Engineering — COMSATS University Islamabad",
+    output: "Software Engineering @ COMSATS University",
     variant: "plain",
   },
   {
     command: "experience",
     output: [
-      "MERN Stack Intern — Eziline",
+      "MERN Stack Intern — EziTech",
       "Frontend Intern — Erudite Coaching Center",
     ],
     variant: "plain",
@@ -40,12 +40,12 @@ const BLOCKS: TerminalBlock[] = [
   },
   {
     command: "cat current-project.txt",
-    output: "AI Adaptive Learning Platform — FBISE Curriculum",
+    output: "AI Adaptive Learning Platform — FBISE Curriculum RAG Model",
     variant: "highlight",
   },
   {
     command: "cat status.txt",
-    output: "Open to internships & AI engineer roles",
+    output: "Open to work",
     variant: "plain",
   },
   {

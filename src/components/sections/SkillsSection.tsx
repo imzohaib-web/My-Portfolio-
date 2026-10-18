@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
+import { Section } from "@/components/layout/Section";
 import { skillCategories, type SkillAccent } from "@/data/skills";
 import { cn } from "@/lib/utils";
 import { LayoutGrid, Server, Sparkles, Wrench } from "lucide-react";
@@ -64,10 +65,9 @@ export function SkillsSection() {
   };
 
   return (
-    <section
+    <Section
       id="skills"
       aria-labelledby="skills-heading"
-      className="relative scroll-mt-24 overflow-hidden py-24 md:py-32"
     >
       <div
         aria-hidden="true"
@@ -85,7 +85,7 @@ export function SkillsSection() {
       <Container className="relative z-10">
         <motion.header {...headerMotion} className="max-w-3xl">
           <p className="font-mono text-[13px] tracking-[0.22em] uppercase text-[var(--accent-primary)]">
-            {"// 02 · SKILLS"}
+            {"// 03 · SKILLS"}
           </p>
           <h2
             id="skills-heading"
@@ -174,6 +174,6 @@ export function SkillsSection() {
           })}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
