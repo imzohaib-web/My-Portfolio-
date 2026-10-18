@@ -65,7 +65,7 @@ Interactive cards highlighting production applications and research-oriented AI 
 
 ### 6. Experience Timeline (`ExperienceSection.tsx`)
 Visual vertical timeline with glowing indicator nodes:
-- **MERN Stack Developer Intern @ Eziline** *(Jun 2026 – Sep 2026)*: Built and maintained features for **Fabric Hub** and **Enterprise LMS**, developed REST APIs, and created React components.
+- **MERN Stack Developer Intern @ EziTech (Eziline Software House)** *(Jun 2026 – Sep 2026)*: Built and maintained features for **Fabric Hub** and **Enterprise LMS**, developed REST APIs, and created React components.
 - **Front-End Developer Intern @ Erudite Coaching Center**: Crafted responsive React interfaces and improved UI/UX performance and accessibility.
 
 ### 7. Certifications & Continuous Learning (`CertificationsSection.tsx`)
