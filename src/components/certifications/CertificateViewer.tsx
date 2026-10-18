@@ -346,7 +346,7 @@ export function CertificateViewer({
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Verify ${currentCert.title} credential`}
-              className="inline-flex h-9 min-w-[44px] items-center gap-2 rounded-full border border-white/20 bg-transparent px-4 text-xs font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/20 bg-transparent px-4 text-xs font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               <span>Verify credential</span>
               <ExternalLink size={13} aria-hidden="true" />
@@ -358,7 +358,7 @@ export function CertificateViewer({
               type="button"
               onClick={() => onOpenLightbox(activeIndex)}
               aria-label={`Zoom into ${currentCert.title}`}
-              className="inline-flex h-9 min-w-[44px] items-center gap-1.5 rounded-full border border-white/20 bg-transparent px-3 text-xs font-medium text-zinc-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/20 bg-transparent px-3 text-xs font-medium text-zinc-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               <Maximize2 size={13} aria-hidden="true" />
               <span>Zoom</span>

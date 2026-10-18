@@ -110,9 +110,9 @@ export const projects: Project[] = [
   },
   {
     slug: "fbise-adaptive-learning-platform",
-    title: "FBISE Adaptive Learning",
+    title: "FBISE Adaptive Learning Path",
     fullTitle: "AI-Powered Adaptive Learning Platform (FBISE Curriculum)",
-    tagline: "Textbook-grounded RAG tutor with adaptive quizzes and past-paper mastery tracking.",
+    tagline: "Textbook-grounded RAG model with adaptive assessments and past-paper mastery tracking.",
     subtitle: "RAG · Adaptive Learning · LLMs · FastAPI",
     category: "AI & ML",
     accent: "violet",

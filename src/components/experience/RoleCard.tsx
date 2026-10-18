@@ -189,7 +189,7 @@ export function RoleCard({ role }: RoleCardProps) {
                 ref={triggerRef}
                 type="button"
                 onClick={() => setIsLightboxOpen(true)}
-                className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 text-xs font-medium text-white transition-colors hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:text-sm"
+                className="inline-flex h-11 min-h-[44px] items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 text-xs font-medium text-white transition-colors hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:text-sm"
               >
                 <Award className="h-4 w-4 shrink-0 text-cyan-400" aria-hidden="true" />
                 <span>View certificate</span>

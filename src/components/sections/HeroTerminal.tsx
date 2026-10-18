@@ -1,230 +1,157 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-interface TerminalBlock {
-  command: string;
-  output: string | string[];
-  variant?: "plain" | "tokens" | "highlight";
-}
-
-const BLOCKS: TerminalBlock[] = [
-  {
-    command: "whoami",
-    output: "Prototype → production · RAG & agents · based in Wah Cantt",
-    variant: "plain",
-  },
-  {
-    command: "education",
-    output: "Software Engineering @ COMSATS University",
-    variant: "plain",
-  },
-  {
-    command: "experience",
-    output: [
-      "MERN Stack Intern — EziTech",
-      "Frontend Intern — Erudite Coaching Center",
-    ],
-    variant: "plain",
-  },
-  {
-    command: "cat stack.txt",
-    output: "React · Next.js · TypeScript · Node.js · FastAPI",
-    variant: "tokens",
-  },
-  {
-    command: "cat focus.txt",
-    output: "Generative AI · RAG Systems · LLM Applications · AI Agents",
-    variant: "tokens",
-  },
-  {
-    command: "cat current-project.txt",
-    output: "AI Adaptive Learning Platform — FBISE Curriculum RAG Model",
-    variant: "highlight",
-  },
-  {
-    command: "cat status.txt",
-    output: "Open to work",
-    variant: "plain",
-  },
-  {
-    command: "location",
-    output: "Wah Cantt, Pakistan",
-    variant: "plain",
-  },
-];
-
-const TOKEN_COLORS = [
-  "text-[var(--accent-primary)]",
-  "text-[var(--accent-secondary)]",
-  "text-emerald-400",
-];
-
-function TokenLine({ text }: { text: string }) {
-  const parts = text.split("·").map((p) => p.trim());
-  return (
-    <p className="mt-1 pl-4 break-words leading-relaxed">
-      {parts.map((part, i) => (
-        <span key={`${part}-${i}`}>
-          {i > 0 && <span className="text-zinc-500 mx-1.5">·</span>}
-          <span className={TOKEN_COLORS[i % TOKEN_COLORS.length]}>{part}</span>
-        </span>
-      ))}
-    </p>
-  );
-}
-
-function BlockOutput({ block }: { block: TerminalBlock }) {
-  if (block.variant === "tokens" && typeof block.output === "string") {
-    return <TokenLine text={block.output} />;
-  }
-
-  const lines = Array.isArray(block.output) ? block.output : [block.output];
-  const lineClass =
-    block.variant === "highlight"
-      ? "text-[var(--accent-secondary)] font-medium"
-      : "text-zinc-300";
-
-  return (
-    <div className="mt-1 pl-4 space-y-0.5">
-      {lines.map((line) => (
-        <p key={line} className={`${lineClass} break-words leading-relaxed`}>
-          {line}
-        </p>
-      ))}
-    </div>
-  );
-}
+/**
+ * Hero Terminal Configuration
+ * All text and commands are centralized here for easy editing.
+ */
+export const HERO_TERMINAL_DATA = {
+  windowTitle: "zohaib — portfolio",
+  commands: [
+    {
+      id: "whoami",
+      command: "whoami",
+      lines: [
+        "Zohaib · Full-Stack Developer",
+        "AI-integrated web applications",
+      ],
+    },
+    {
+      id: "stack",
+      command: "stack",
+      lines: [
+        "React · Next.js · TypeScript",
+        "Node.js · Python · FastAPI",
+      ],
+    },
+    {
+      id: "experience",
+      command: "experience",
+      lines: [
+        "MERN Intern @ EziTech",
+      ],
+    },
+    {
+      id: "building",
+      command: "building",
+      lines: [
+        "FBISE Adaptive Learning Platform",
+        "RAG over the curriculum",
+      ],
+    },
+    {
+      id: "status",
+      command: "status",
+      isStatus: true,
+      lines: [
+        "Open to internships",
+        "AI/full-stack roles",
+      ],
+    },
+  ],
+};
 
 export function HeroTerminal() {
   const shouldReduceMotion = useReducedMotion();
   const staticMode = shouldReduceMotion === true;
 
-  const [blockIndex, setBlockIndex] = useState(staticMode ? BLOCKS.length : 0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [phase, setPhase] = useState<"command" | "output" | "done">(
-    staticMode ? "done" : "command"
-  );
-
-  const terminalSummary = useMemo(
-    () =>
-      BLOCKS.map((b) => {
-        const out = Array.isArray(b.output) ? b.output.join("; ") : b.output;
-        return `$ ${b.command}: ${out}`;
-      }).join(". "),
-    []
-  );
+  const totalCommands = HERO_TERMINAL_DATA.commands.length;
+  const [visibleCount, setVisibleCount] = useState(staticMode ? totalCommands : 1);
+  const [isDone, setIsDone] = useState(staticMode);
 
   useEffect(() => {
-    if (staticMode || phase === "done" || blockIndex >= BLOCKS.length) return;
+    if (staticMode || isDone) return;
 
-    const block = BLOCKS[blockIndex];
-    if (!block) return;
-
-    if (phase === "command") {
-      if (charIndex < block.command.length) {
-        const t = setTimeout(() => setCharIndex((c) => c + 1), 25);
-        return () => clearTimeout(t);
-      }
-      const t = setTimeout(() => {
-        setPhase("output");
-        setCharIndex(0);
-      }, 120);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "output") {
-      const t = setTimeout(() => {
-        if (blockIndex + 1 >= BLOCKS.length) {
-          setPhase("done");
-        } else {
-          setBlockIndex((i) => i + 1);
-          setPhase("command");
-          setCharIndex(0);
+    const timer = setInterval(() => {
+      setVisibleCount((prev) => {
+        const next = prev + 1;
+        if (next >= totalCommands) {
+          clearInterval(timer);
+          setIsDone(true);
+          return totalCommands;
         }
-      }, 280);
-      return () => clearTimeout(t);
-    }
-  }, [blockIndex, charIndex, phase, staticMode]);
+        return next;
+      });
+    }, 400);
 
-  const completedBlocks = staticMode ? BLOCKS : BLOCKS.slice(0, blockIndex);
-  const currentBlock = staticMode ? null : BLOCKS[blockIndex];
-  const typingCommand =
-    !staticMode && phase === "command" && currentBlock
-      ? currentBlock.command.slice(0, charIndex)
-      : "";
-  const showCurrentOutput =
-    !staticMode && phase === "output" && currentBlock !== undefined;
+    return () => clearInterval(timer);
+  }, [staticMode, isDone, totalCommands]);
 
   return (
     <motion.div
-      className="terminal-card relative w-full min-w-0"
-      whileHover={staticMode ? undefined : { scale: 1.005 }}
+      className="terminal-card relative w-full min-w-0 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 backdrop-blur-xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6),0_0_50px_-15px_rgba(52,211,153,0.12)] overflow-hidden"
+      whileHover={staticMode ? undefined : { scale: 1.004 }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
     >
-      <div className="relative rounded-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-xl shadow-[0_0_80px_-20px_rgba(34,211,238,0.25)] overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
-          <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+      {/* Card Header with small, dim traffic-light dots and text-zinc-400 title */}
+      <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/[0.06] bg-white/[0.015]">
+        <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
+          <span className="w-2 h-2 rounded-full bg-[#ff5f56]/40" />
+          <span className="w-2 h-2 rounded-full bg-[#ffbd2e]/40" />
+          <span className="w-2 h-2 rounded-full bg-[#27c93f]/40" />
+        </div>
+        <span className="text-xs font-mono text-zinc-400 tracking-wide truncate select-none">
+          {HERO_TERMINAL_DATA.windowTitle}
+        </span>
+        <div className="w-8 shrink-0" aria-hidden="true" />
+      </div>
+
+      {/* Card Content with generous spacing (20-24px between command blocks) */}
+      <div
+        className="p-4 sm:p-6 md:p-8 font-mono text-[14px] md:text-[15px] leading-[1.7] space-y-5 sm:space-y-6 select-text overflow-hidden"
+        role="region"
+        aria-label="Terminal hero card"
+      >
+        {HERO_TERMINAL_DATA.commands.slice(0, visibleCount).map((item) => (
+          <div key={item.id} className="min-w-0">
+            {/* Command line: green '$' and white semibold command text */}
+            <div className="flex items-baseline gap-2">
+              <span className="text-emerald-400 font-semibold select-none">$</span>
+              <span className="text-white font-semibold">{item.command}</span>
+            </div>
+
+            {/* Output in text-zinc-200 */}
+            {item.isStatus ? (
+              <div className="mt-1.5 flex items-start sm:items-center gap-2.5">
+                <span className="relative flex h-2 w-2 items-center justify-center shrink-0 mt-2 sm:mt-0">
+                  <span
+                    className={`absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 ${
+                      shouldReduceMotion ? "" : "animate-ping motion-reduce:animate-none"
+                    }`}
+                  />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
+                </span>
+                <p className="text-zinc-200 font-medium leading-[1.7]">
+                  <span className="block sm:inline">{item.lines[0]}</span>
+                  <span className="hidden sm:inline"> · </span>
+                  <span className="block sm:inline">{item.lines[1]}</span>
+                </p>
+              </div>
+            ) : (
+              <div className="mt-1.5 text-zinc-200">
+                {item.lines.map((line, idx) => (
+                  <p key={idx} className="break-words leading-[1.7]">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
-          <span className="flex-1 text-center text-xs font-mono text-zinc-400 truncate select-none">
-            zohaib@portfolio — bash
-          </span>
-          <div className="w-10 shrink-0" aria-hidden="true" />
-        </div>
+        ))}
 
-        <div
-          className="px-4 py-4 md:px-5 md:py-5 font-mono text-[13px] md:text-sm leading-relaxed space-y-3 select-text"
-          aria-label={`Terminal session: ${terminalSummary}`}
-        >
-          {completedBlocks.map((block) => (
-            <div key={block.command}>
-              <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="text-[var(--success)] font-semibold select-none">$</span>
-                <span className="text-white font-semibold">{block.command}</span>
-              </div>
-              <BlockOutput block={block} />
-            </div>
-          ))}
-
-          {!staticMode && currentBlock && phase === "command" && (
-            <div>
-              <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="text-[var(--success)] font-semibold select-none">$</span>
-                <span className="text-white font-semibold">{typingCommand}</span>
-                <span
-                  className="w-1.5 h-4 bg-[var(--success)]/90 inline-block animate-pulse"
-                  aria-hidden="true"
-                />
-              </div>
-            </div>
-          )}
-
-          {showCurrentOutput && currentBlock && (
-            <div>
-              <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="text-[var(--success)] font-semibold select-none">$</span>
-                <span className="text-white font-semibold">{currentBlock.command}</span>
-              </div>
-              <BlockOutput block={currentBlock} />
-            </div>
-          )}
-
-          {(staticMode || phase === "done") && (
-            <div className="flex items-center gap-2 pt-0.5">
-              <span className="text-[var(--success)] font-semibold select-none">$</span>
-              {!staticMode && (
-                <span
-                  className="w-1.5 h-4 bg-[var(--success)]/90 inline-block animate-pulse"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-          )}
-        </div>
+        {/* Active blinking terminal prompt at the end */}
+        {(staticMode || isDone) && (
+          <div className="flex items-center gap-2 pt-0.5" aria-hidden="true">
+            <span className="text-emerald-400 font-semibold select-none">$</span>
+            <span
+              className={`inline-block w-1.5 h-4 bg-emerald-400/90 align-middle ${
+                shouldReduceMotion ? "" : "animate-pulse motion-reduce:animate-none"
+              }`}
+            />
+          </div>
+        )}
       </div>
     </motion.div>
   );

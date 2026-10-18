@@ -1,4 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
@@ -18,10 +23,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+import { PROFILE } from "@/lib/profile";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://zohaibumer.dev"),
-  title: "Zohaib Umer | AI Engineer & Full Stack Developer",
-  description: "Portfolio of Zohaib Umer, showcasing expertise in React, Next.js, FastAPI, LangChain, and Generative AI systems.",
+  title: `${PROFILE.name} | ${PROFILE.role}`,
+  description: `Portfolio of ${PROFILE.name}, showcasing expertise in React, Next.js, FastAPI, LangChain, and Generative AI systems.`,
 };
 
 export default function RootLayout({

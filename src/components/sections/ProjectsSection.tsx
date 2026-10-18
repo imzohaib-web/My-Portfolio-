@@ -61,7 +61,7 @@ export function ProjectsSection() {
         </motion.div>
 
         {/* Featured Projects Layout: lg+ 3-col grid; below lg horizontal swipe row */}
-        <div className="lg:grid lg:grid-cols-3 lg:gap-5 lg:gap-y-6 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden items-stretch">
+        <div className="lg:grid lg:grid-cols-3 lg:gap-5 lg:gap-y-6 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden items-stretch">
           {featuredProjects.map((project, idx) => (
             <motion.div
               key={project.slug}
