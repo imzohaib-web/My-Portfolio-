@@ -48,7 +48,7 @@ export function CertificateLightbox({
       document.body.style.overflow = originalOverflow;
       clearTimeout(timeout);
       // Return focus to trigger element
-      triggerElement?.focus();
+      triggerElement?.focus({ preventScroll: true });
     };
   }, [isOpen, triggerRef]);
 

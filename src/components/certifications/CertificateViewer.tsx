@@ -40,12 +40,18 @@ export function CertificateViewer({
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const isProgrammatic = useRef(false);
   const rafId = useRef<number | null>(null);
+  const didMount = useRef(false);
 
   const currentCert = certifications[activeIndex] ?? certifications[0];
   const currentHasValidImage = Boolean(currentCert.image && !imageErrors[currentCert.id]);
 
   // Sync scroll position when activeIndex changes from parent / list / arrows
+  // Skip on initial render to prevent unwanted scroll jumps
   useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
     const track = trackRef.current;
     if (!track) return;
     const targetLeft = activeIndex * track.clientWidth;

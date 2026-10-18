@@ -41,7 +41,7 @@ export function ExperienceLightbox({
     return () => {
       document.body.style.overflow = originalOverflow;
       clearTimeout(timer);
-      triggerElement?.focus();
+      triggerElement?.focus({ preventScroll: true });
     };
   }, [isOpen, triggerRef]);
 

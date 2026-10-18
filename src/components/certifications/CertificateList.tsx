@@ -21,18 +21,32 @@ export function CertificateList({
   const shouldReduceMotion = useReducedMotion();
   const listRef = useRef<HTMLUListElement>(null);
 
+  const isFirstRender = useRef(true);
+
   // Keep active row/chip visible on mobile horizontal scrolling
+  // Skip on initial render; scroll track element only, never element.scrollIntoView (prevents scrolling window)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (typeof window === "undefined" || window.innerWidth >= 1024) return;
     const list = listRef.current;
     if (!list) return;
 
     const activeEl = list.querySelector<HTMLElement>('[aria-current="true"]');
     if (activeEl) {
-      activeEl.scrollIntoView({
+      const listRect = list.getBoundingClientRect();
+      const activeRect = activeEl.getBoundingClientRect();
+      const currentScroll = list.scrollLeft;
+      const targetScroll =
+        currentScroll +
+        (activeRect.left - listRect.left) -
+        (listRect.width / 2 - activeRect.width / 2);
+
+      list.scrollTo({
+        left: Math.max(0, targetScroll),
         behavior: shouldReduceMotion ? "auto" : "smooth",
-        inline: "center",
-        block: "nearest",
       });
     }
   }, [activeIndex, shouldReduceMotion]);

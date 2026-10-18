@@ -130,11 +130,11 @@ export function Navbar() {
     if (isOpen) {
       wasOpenRef.current = true;
       const timer = setTimeout(() => {
-        firstLinkRef.current?.focus();
+        firstLinkRef.current?.focus({ preventScroll: true });
       }, 50);
       return () => clearTimeout(timer);
     } else if (wasOpenRef.current) {
-      menuButtonRef.current?.focus();
+      menuButtonRef.current?.focus({ preventScroll: true });
       wasOpenRef.current = false;
     }
   }, [isOpen]);
