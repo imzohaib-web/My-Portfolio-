@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { certifications } from "@/data/certifications";
@@ -15,6 +15,21 @@ export function CertificationsSection() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const handleSelectCert = (event: Event) => {
+      const customEvent = event as CustomEvent<string>;
+      const id = customEvent.detail;
+      if (!id) return;
+      const index = certifications.findIndex((c) => c.id === id);
+      if (index !== -1) {
+        setActiveIndex(index);
+      }
+    };
+
+    window.addEventListener("select-certificate", handleSelectCert);
+    return () => window.removeEventListener("select-certificate", handleSelectCert);
+  }, []);
 
   const earnedCount = certifications.filter((c) => c.status === "earned").length;
   const pendingCount = certifications.filter((c) => c.status === "pending").length;
@@ -37,8 +52,6 @@ export function CertificationsSection() {
 
   return (
     <Section id="certifications" className="z-10 relative scroll-mt-24">
-      {/* Backwards-compatibility alias for #milestones */}
-      <span id="milestones" className="absolute -top-24 pointer-events-none" aria-hidden="true" />
 
       {/* Background Ambience & Grid */}
       <div
