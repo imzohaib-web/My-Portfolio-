@@ -3,6 +3,7 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { CertificationsSection } from "@/components/sections/CertificationsSection";
+import { MilestonesSection } from "@/components/sections/MilestonesSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ScrollToTopOnLoad } from "@/components/ScrollToTopOnLoad";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <ExperienceSection />
       <SkillsSection />
       <CertificationsSection />
+      <MilestonesSection />
       <ContactSection />
     </main>
   );

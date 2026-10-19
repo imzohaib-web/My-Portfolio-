@@ -13,10 +13,19 @@ const links = [
   { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
   { name: "Certifications", href: "#certifications" },
+  { name: "Milestones", href: "#milestones" },
   { name: "Contact", href: "#contact" },
 ];
 
-const sectionIds = ["hero", "projects", "experience", "skills", "certifications", "contact"];
+const sectionIds = [
+  "hero",
+  "projects",
+  "experience",
+  "skills",
+  "certifications",
+  "milestones",
+  "contact",
+];
 
 function NavLink({
   href,
