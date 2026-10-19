@@ -253,6 +253,49 @@ body {
   opacity: 1;
 }
 
+.milestone-card {
+  position: relative;
+}
+
+.milestone-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 200ms ease;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.milestone-card:hover::before {
+  opacity: 1;
+}
+
+.milestone-card[data-accent="amber"]::before {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.45), rgba(251, 191, 36, 0.08), transparent);
+}
+
+.milestone-card[data-accent="violet"]::before {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.45), rgba(168, 85, 247, 0.08), transparent);
+}
+
+.milestone-card[data-accent="emerald"]::before {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.45), rgba(52, 211, 153, 0.08), transparent);
+}
+
+.milestone-card[data-accent="rose"]::before {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.45), rgba(244, 63, 94, 0.08), transparent);
+}
+
+.milestone-card[data-accent="cyan"]::before {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.45), rgba(34, 211, 238, 0.08), transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animated-gradient-border {
     animation: none !important;
