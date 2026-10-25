@@ -1,1 +1,1 @@
-export { MilestoneCard, ImageWithFallback } from "@/components/ui/MilestoneCard";
+export { MilestoneCard } from "@/components/ui/MilestoneCard";

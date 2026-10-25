@@ -296,6 +296,40 @@ body {
   background: linear-gradient(135deg, rgba(34, 211, 238, 0.45), rgba(34, 211, 238, 0.08), transparent);
 }
 
+.milestone-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.milestone-description {
+  min-height: 4.5rem;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .milestone-card {
+    display: grid !important;
+    grid-template-columns: 42% 1fr !important;
+  }
+  .milestone-card .milestone-media {
+    aspect-ratio: auto !important;
+    height: 100% !important;
+    min-height: 220px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .milestone-card {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .milestone-card .milestone-media {
+    aspect-ratio: 16 / 10 !important;
+    height: auto !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animated-gradient-border {
     animation: none !important;
