@@ -1,107 +1,65 @@
-export type MilestoneCategory =
-  | "Hackathon"
-  | "Project"
-  | "Learning"
-  | "Program"
-  | "Leadership"
-  | "Scholarship";
+export type MilestoneCategory = "Hackathon" | "Leadership" | "Scholarship";
 
-export type MilestoneStatus = "completed" | "applied" | "ongoing";
+export type MilestoneTone = "amber" | "emerald";
 
 export type Milestone = {
-  slug: string;
+  id: string;
   title: string;
-  description: string;
-  image: string;
-  imageAlt: string;
+  period: string;
   category: MilestoneCategory;
-  year: string;
-  status: MilestoneStatus;
-  linkLabel: string;
-  href: string;
-  certificateId?: string;
+  statusLabel: string; // e.g. "Selected for the finale"
+  tone: MilestoneTone;
+  description: string; // max ~160 chars, shown on 3 lines
+  facts: string[]; // 2-3 short chips
+  image?: string; // /milestones/<id>.webp
+  imageAlt?: string;
+  imagePosition?: string; // e.g. 'center 30%'
+  certificateId?: string; // id in data/certifications.ts
+  link?: { label: string; href: string };
 };
 
 export const milestones: Milestone[] = [
   {
-    slug: "alibaba-ai-hackathon",
-    title: "Alibaba Cloud AI Hackathon Pakistan 2026",
-    description:
-      "Selected for the build phase and shipped CareerPilot AI, a deployed 6-module AI career mentor.",
-    image: "/milestones/alibaba-ai-hackathon.jpg",
-    imageAlt: "Alibaba Cloud AI Hackathon Pakistan 2026 CareerPilot AI presentation",
+    id: "alibaba-hackathon",
+    title: "Alibaba Cloud AI Hackathon",
+    period: "2026",
     category: "Hackathon",
-    year: "2026",
-    status: "completed",
-    linkLabel: "View certificate",
-    href: "#certifications",
+    statusLabel: "Selected for the finale",
+    tone: "amber",
+    description:
+      "Presented CareerPilot AI, a deployed 6-module AI career mentor, at the regional round and was selected for the finale.",
+    facts: ["6 AI modules", "Deployed", "Team of 2"],
+    image: "/milestones/alibaba-hackathon.webp",
+    imageAlt: "Alibaba Cloud AI Hackathon presentation of CareerPilot AI",
+    imagePosition: "center 35%",
     certificateId: "alibaba-cloud-ai-hackathon-2026",
   },
   {
-    slug: "adaptive-learning-platform",
-    title: "AI Adaptive Learning Platform (FYP)",
-    description:
-      "Textbook-grounded RAG tutor for FBISE Math & Science with adaptive quizzes and mastery tracking.",
-    image: "/milestones/adaptive-learning-platform.jpg",
-    imageAlt: "AI Adaptive Learning Platform FYP user interface",
-    category: "Project",
-    year: "2026",
-    status: "ongoing",
-    linkLabel: "View project",
-    href: "#projects",
-  },
-  {
-    slug: "genai-chatbot-bano-qabil",
-    title: "Generative AI & Chatbot Development",
-    description:
-      "Built LLM conversational agents, prompt evaluation pipelines, and multi-turn chatbots with Bano Qabil.",
-    image: "/milestones/genai-chatbot-bano-qabil.jpg",
-    imageAlt: "Generative AI and Chatbot Development coursework by Bano Qabil",
-    category: "Learning",
-    year: "2026",
-    status: "completed",
-    linkLabel: "View certificate",
-    href: "#certifications",
-    certificateId: "generative-ai-chatbot-development-bano-qabil",
-  },
-  {
-    slug: "microsoft-student-ambassadors",
-    title: "Microsoft Learn Student Ambassadors",
-    description:
-      "Applied to grow my tech community work through workshops and student-led events.",
-    image: "/milestones/microsoft-student-ambassadors.jpg",
-    imageAlt: "Microsoft Learn Student Ambassadors tech community program",
-    category: "Program",
-    year: "Oct 2026",
-    status: "applied",
-    linkLabel: "Details",
-    href: "https://studentambassadors.microsoft.com/",
-  },
-  {
-    slug: "aspire-leaders",
+    id: "aspire-leaders",
     title: "Aspire Leaders Program",
-    description:
-      "Free online leadership program from the Aspire Institute, founded at Harvard University.",
-    image: "/milestones/aspire-leaders.jpg",
-    imageAlt: "Aspire Leaders Program leadership development Harvard Institute",
+    period: "2025",
     category: "Leadership",
-    year: "2025",
-    status: "completed",
-    linkLabel: "Details",
-    href: "https://www.aspireleaders.org/",
+    statusLabel: "Completed",
+    tone: "emerald",
+    description:
+      "Free online leadership development program from the Aspire Institute, founded at Harvard University.",
+    facts: ["Harvard-founded", "Free online"],
+    image: "/milestones/aspire-leaders.webp", // TODO: I will add this file (certificate or program screenshot).
+    imageAlt: "Aspire Leaders Program leadership development founded at Harvard University",
+    link: { label: "Aspire Leaders", href: "https://www.aspireleaders.org/" },
   },
   {
-    slug: "english-access-scholarship",
-    title: "English Access Scholarship Program",
+    id: "english-access",
+    title: "English Access Scholarship",
+    period: "2024-25",
+    category: "Scholarship",
+    statusLabel: "Completed",
+    tone: "emerald",
     description:
       "Completed a 400-hour English language program over 18 months through a scholarship.",
-    image: "/milestones/english-access-scholarship.jpg",
-    imageAlt: "English Access Scholarship Program graduation and diploma",
-    category: "Scholarship",
-    year: "2024-25",
-    status: "completed",
-    linkLabel: "View certificate",
-    href: "#certifications",
+    facts: ["400 hrs", "18 months"],
+    image: "/milestones/english-access.webp",
+    imageAlt: "English Access Scholarship Program graduation ceremony",
     certificateId: "english-access-scholarship-program",
   },
 ];
