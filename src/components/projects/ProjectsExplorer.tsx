@@ -22,14 +22,12 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
   const [isStuck, setIsStuck] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  // IntersectionObserver sentinel to detect when sticky bar is stuck
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When sentinel is not intersecting, the bar has scrolled past top-[72px]
         setIsStuck(!entry.isIntersecting);
       },
       { rootMargin: "-72px 0px 0px 0px", threshold: 0 }
@@ -39,7 +37,6 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Compute categories and counts (only AI & ML and Full-Stack)
   const categoriesWithCounts = useMemo(() => {
     const counts: Record<string, number> = { All: projects.length };
     projects.forEach((p) => {
@@ -56,7 +53,6 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
     }));
   }, [projects]);
 
-  // Filtered projects
   const filteredProjects = useMemo(() => {
     if (currentCategory === "All") return projects;
     return projects.filter((p) => p.category === currentCategory);
@@ -77,7 +73,6 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
     [router, searchParams]
   );
 
-  // Deep links: hash check, auto-switch to All if hidden, scroll, and 1.6s highlight ring
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace("#", "");
@@ -86,12 +81,10 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
       const targetProject = projects.find((p) => p.slug === hash);
       if (!targetProject) return;
 
-      // If hidden under current filter, switch to All
       if (currentCategory !== "All" && targetProject.category !== currentCategory) {
         selectCategory("All");
       }
 
-      // Small delay to allow DOM render / layout
       setTimeout(() => {
         const el = document.getElementById(hash);
         if (el) {
@@ -116,23 +109,20 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
 
   return (
     <>
-      {/* Sentinel for sticky detection */}
       <div ref={sentinelRef} className="h-px -mt-px pointer-events-none" aria-hidden="true" />
 
-      {/* Sticky Filter Bar */}
       <div
         className={cn(
-          "sticky top-[72px] z-30 transition-all duration-200",
+          "sticky top-[72px] z-30 transition-colors duration-200",
           isStuck
-            ? "border-b border-white/5 bg-black/60 backdrop-blur-md"
+            ? "border-b border-white/[0.08] bg-[#0b0b0c]"
             : "border-b border-transparent bg-transparent"
         )}
       >
         <Container className="py-3">
           <div className="flex items-center justify-between gap-4">
-            {/* Filter buttons row */}
             <div
-              className="flex items-center gap-2.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               role="toolbar"
               aria-label="Filter projects by category"
             >
@@ -146,19 +136,19 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
                     aria-pressed={isActive}
                     onClick={() => selectCategory(name)}
                     className={cn(
-                      "inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full px-5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+                      "inline-flex min-h-[40px] shrink-0 items-center gap-2 rounded-lg px-4 text-xs md:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]",
                       isActive
-                        ? "bg-white text-zinc-950 shadow-sm"
-                        : "border border-white/10 bg-white/[0.04] text-zinc-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                        ? "bg-[#c6f432] text-[#0b0b0c] font-semibold"
+                        : "border border-white/[0.08] bg-[#131315] text-[#8f8f94] hover:border-white/20 hover:text-white"
                     )}
                   >
                     <span>{name}</span>
                     <span
                       className={cn(
-                        "rounded-full px-2 py-0.5 text-xs font-mono",
+                        "rounded px-1.5 py-0.5 text-xs font-mono",
                         isActive
-                          ? "bg-zinc-200 text-zinc-950 font-semibold"
-                          : "bg-white/10 text-zinc-400"
+                          ? "bg-[#0b0b0c]/15 text-[#0b0b0c]"
+                          : "bg-white/[0.06] text-[#8f8f94]"
                       )}
                     >
                       {count}
@@ -168,15 +158,13 @@ function ProjectsExplorerInner({ projects }: ProjectsExplorerProps) {
               })}
             </div>
 
-            {/* Project count on the right of same row */}
-            <span className="hidden font-mono text-sm text-zinc-400 sm:inline-block shrink-0">
+            <span className="hidden font-mono text-xs text-[#8f8f94] sm:inline-block shrink-0">
               {filteredProjects.length} {filteredProjects.length === 1 ? "project" : "projects"}
             </span>
           </div>
         </Container>
       </div>
 
-      {/* Stacked Projects List Container */}
       <Container className="py-10 md:py-14">
         <motion.div
           layout={!shouldReduceMotion}
@@ -215,7 +203,7 @@ export function ProjectsExplorer({ projects }: ProjectsExplorerProps) {
     <Suspense
       fallback={
         <Container className="py-12">
-          <div className="h-12 w-full animate-pulse rounded-xl bg-white/5" />
+          <div className="h-12 w-full animate-pulse rounded-xl bg-white/[0.04]" />
         </Container>
       }
     >

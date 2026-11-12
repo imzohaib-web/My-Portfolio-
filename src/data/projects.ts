@@ -465,7 +465,7 @@ export function getAllProjects(): Project[] {
 }
 
 export function getProjectsForDisplay(): Project[] {
-  return projects;
+  return [...projects].sort((a, b) => Number(b.featured) - Number(a.featured));
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {

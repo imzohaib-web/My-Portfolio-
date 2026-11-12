@@ -31,71 +31,29 @@ export type CategoryStyle = {
   chip: string;
 };
 
+const neutralStyle: CategoryStyle = {
+  name: "",
+  text: "text-white",
+  border: "border-white/[0.08]",
+  bg: "bg-white/[0.02]",
+  tile: "bg-white/[0.03] border-white/[0.08] text-[#c6f432]",
+  activeBg: "bg-[#131315]",
+  activeBorder: "border-[#c6f432]/60",
+  bar: "bg-[#c6f432]",
+  ring: "focus-visible:ring-[#c6f432]",
+  chip: "text-[#ededed] bg-white/[0.04] border-white/[0.08]",
+};
+
 export const categoryAccents: Record<CertificationCategory, CategoryStyle> = {
-  AI: {
-    name: "AI",
-    text: "text-cyan-400",
-    border: "border-cyan-400/30",
-    bg: "bg-cyan-400/10",
-    tile: "bg-cyan-400/10 border-cyan-400/25 text-cyan-400",
-    activeBg: "bg-cyan-400/10",
-    activeBorder: "border-cyan-400/60",
-    bar: "bg-cyan-400",
-    ring: "focus-visible:ring-cyan-400",
-    chip: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
-  },
-  Programming: {
-    name: "Programming",
-    text: "text-violet-400",
-    border: "border-violet-400/30",
-    bg: "bg-violet-400/10",
-    tile: "bg-violet-400/10 border-violet-400/25 text-violet-400",
-    activeBg: "bg-violet-400/10",
-    activeBorder: "border-violet-400/60",
-    bar: "bg-violet-400",
-    ring: "focus-visible:ring-violet-400",
-    chip: "text-violet-400 bg-violet-400/10 border-violet-400/30",
-  },
-  Data: {
-    name: "Data",
-    text: "text-emerald-400",
-    border: "border-emerald-400/30",
-    bg: "bg-emerald-400/10",
-    tile: "bg-emerald-400/10 border-emerald-400/25 text-emerald-400",
-    activeBg: "bg-emerald-400/10",
-    activeBorder: "border-emerald-400/60",
-    bar: "bg-emerald-400",
-    ring: "focus-visible:ring-emerald-400",
-    chip: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
-  },
-  Hackathon: {
-    name: "Hackathon",
-    text: "text-amber-400",
-    border: "border-amber-400/30",
-    bg: "bg-amber-400/10",
-    tile: "bg-amber-400/10 border-amber-400/25 text-amber-400",
-    activeBg: "bg-amber-400/10",
-    activeBorder: "border-amber-400/60",
-    bar: "bg-amber-400",
-    ring: "focus-visible:ring-amber-400",
-    chip: "text-amber-400 bg-amber-400/10 border-amber-400/30",
-  },
-  Scholarship: {
-    name: "Scholarship",
-    text: "text-rose-300",
-    border: "border-rose-400/30",
-    bg: "bg-rose-400/10",
-    tile: "bg-rose-400/10 border-rose-400/25 text-rose-300",
-    activeBg: "bg-rose-400/10",
-    activeBorder: "border-rose-400/60",
-    bar: "bg-rose-300",
-    ring: "focus-visible:ring-rose-300",
-    chip: "text-rose-300 bg-rose-400/10 border-rose-400/30",
-  },
+  AI: { ...neutralStyle, name: "AI" },
+  Programming: { ...neutralStyle, name: "Programming" },
+  Data: { ...neutralStyle, name: "Data" },
+  Hackathon: { ...neutralStyle, name: "Hackathon" },
+  Scholarship: { ...neutralStyle, name: "Scholarship" },
 };
 
 export const certifications: Certification[] = [
-    {
+  {
     id: "ai-for-everyone",
     title: "AI For Everyone",
     issuer: "Coursera",
@@ -113,7 +71,6 @@ export const certifications: Certification[] = [
     category: "AI",
     image: "/certificates/certificate3.jpeg",
     status: "earned",
-    // TODO: confirm this link opens the certificate.
     verifyUrl:
       "https://www.linkedin.com/learning/certificates/6ac3206473664d20cb1d1c13f90a8ac9cf3f30c7820e42bef6b04eb907a22713b",
   },
@@ -127,7 +84,6 @@ export const certifications: Certification[] = [
     status: "earned",
     verifyUrl: "https://coursera.org/share/fabb97bd2eb503240d7806e87fadd1a2",
   },
-
   {
     id: "programming-for-everybody-python",
     title: "Programming for Everybody (Python)",
@@ -141,7 +97,6 @@ export const certifications: Certification[] = [
   {
     id: "foundations-data-data-everywhere",
     title: "Foundations: Data, Data, Everywhere",
-    // TODO: confirm issuer and year
     issuer: "Coursera",
     year: "2025",
     category: "Data",
@@ -152,7 +107,6 @@ export const certifications: Certification[] = [
   {
     id: "english-access-scholarship-program",
     title: "English Access Scholarship Program",
-    // TODO: confirm issuer
     issuer: "U.S. Embassy Islamabad",
     year: "2024-25",
     category: "Scholarship",
@@ -161,7 +115,6 @@ export const certifications: Certification[] = [
   },
   {
     id: "alibaba-cloud-ai-hackathon-2026",
-    // TODO: confirm title
     title: "Alibaba Cloud AI Hackathon Pakistan 2026",
     issuer: "Alibaba Cloud",
     year: "2026",
@@ -181,9 +134,6 @@ export const certifications: Certification[] = [
   },
 ];
 
-/**
- * Format issuer and year gracefully without trailing/empty separators or undefined
- */
 export function formatCertMeta(issuer?: string, year?: string): string {
   return [issuer, year].filter(Boolean).join(" · ");
 }

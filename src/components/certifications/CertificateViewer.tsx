@@ -8,15 +8,12 @@ import {
   Maximize2,
   ExternalLink,
   Award,
-  Clock,
   Check,
   Copy,
-  CheckCircle2,
 } from "lucide-react";
 import type { Certification } from "@/data/certifications";
-import { categoryAccents, formatCertMeta } from "@/data/certifications";
+import { formatCertMeta } from "@/data/certifications";
 import { useReducedMotion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface CertificateViewerProps {
   certifications: Certification[];
@@ -25,6 +22,9 @@ interface CertificateViewerProps {
   onOpenLightbox: (index: number) => void;
   triggerRef: React.RefObject<HTMLButtonElement | null>;
 }
+
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
 
 export function CertificateViewer({
   certifications,
@@ -45,8 +45,6 @@ export function CertificateViewer({
   const currentCert = certifications[activeIndex] ?? certifications[0];
   const currentHasValidImage = Boolean(currentCert.image && !imageErrors[currentCert.id]);
 
-  // Sync scroll position when activeIndex changes from parent / list / arrows
-  // Skip on initial render to prevent unwanted scroll jumps
   useEffect(() => {
     if (!didMount.current) {
       didMount.current = true;
@@ -68,7 +66,6 @@ export function CertificateViewer({
     }
   }, [activeIndex, shouldReduceMotion]);
 
-  // Keep alignment on window resize
   useEffect(() => {
     const handleResize = () => {
       const track = trackRef.current;
@@ -82,7 +79,6 @@ export function CertificateViewer({
     return () => window.removeEventListener("resize", handleResize);
   }, [activeIndex]);
 
-  // Handle native swipe/scroll update with rAF
   const handleScroll = useCallback(() => {
     if (isProgrammatic.current) return;
     if (rafId.current !== null) cancelAnimationFrame(rafId.current);
@@ -108,7 +104,6 @@ export function CertificateViewer({
     };
   }, []);
 
-  // Arrow navigation
   const handlePrev = () => {
     if (activeIndex > 0) {
       onSelectIndex(activeIndex - 1);
@@ -121,7 +116,6 @@ export function CertificateViewer({
     }
   };
 
-  // Keyboard navigation when viewer stage is focused
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") {
       e.preventDefault();
@@ -132,7 +126,6 @@ export function CertificateViewer({
     }
   };
 
-  // Copy credential ID helper
   const handleCopy = async (idText: string) => {
     try {
       await navigator.clipboard.writeText(idText);
@@ -152,14 +145,13 @@ export function CertificateViewer({
       role="region"
       aria-roledescription="carousel"
       aria-label="Certificates"
-      className="cert-card certificate-card relative flex flex-col justify-between rounded-2xl border border-white/10 bg-zinc-950/60 p-4 md:p-5 shadow-2xl backdrop-blur-xl"
+      className="relative flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#131315] p-4 md:p-5"
     >
-      {/* Stage */}
       <div
         ref={stageRef}
         tabIndex={0}
         onKeyDown={handleKeyDown}
-        className="relative h-[260px] sm:h-[340px] lg:h-[400px] w-full overflow-hidden rounded-xl border border-white/10 bg-zinc-900/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+        className={`relative h-[260px] sm:h-[340px] lg:h-[400px] w-full overflow-hidden rounded-lg border border-white/[0.08] bg-[#0b0b0c] ${focusRing}`}
         aria-label="Certificate carousel stage. Use Left and Right arrow keys to navigate."
       >
         <div
@@ -169,7 +161,6 @@ export function CertificateViewer({
         >
           {certifications.map((cert, index) => {
             const isSlideActive = index === activeIndex;
-            const certAccent = categoryAccents[cert.category];
             const hasValidImage = Boolean(cert.image && !imageErrors[cert.id]);
             const metaLine = formatCertMeta(cert.issuer, cert.year);
 
@@ -186,7 +177,7 @@ export function CertificateViewer({
                     type="button"
                     ref={isSlideActive ? triggerRef : undefined}
                     onClick={() => onOpenLightbox(index)}
-                    className="group relative h-full w-full cursor-zoom-in rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className={`group relative h-full w-full cursor-zoom-in rounded-lg ${focusRing}`}
                     aria-label={`Zoom ${cert.title}`}
                   >
                     <Image
@@ -195,78 +186,60 @@ export function CertificateViewer({
                       fill
                       sizes="(min-width: 1024px) 560px, 92vw"
                       priority={index === 0}
-                      className="object-contain p-1 transition-transform duration-300 group-hover:scale-[1.01]"
+                      className="object-contain p-1"
                       onError={() => handleImageError(cert.id)}
                     />
                   </button>
                 ) : (
-                  /* Placeholder slide (no image or failed image) */
-                  <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border border-white/10 bg-zinc-950/80 p-6 text-center">
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-lg border border-white/[0.08] bg-[#0b0b0c] p-6 text-center">
                     <div
-                      className={cn(
-                        "flex h-14 w-14 items-center justify-center rounded-2xl border",
-                        certAccent.bg,
-                        certAccent.border,
-                        certAccent.text
-                      )}
+                      className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-[#c6f432]"
                       aria-hidden="true"
                     >
-                      <Award size={30} />
+                      <Award size={24} />
                     </div>
 
-                    <h3 className="mt-4 line-clamp-2 max-w-sm text-base sm:text-lg font-bold text-white">
+                    <h3 className="mt-4 line-clamp-2 max-w-sm text-base font-medium text-white">
                       {cert.title}
                     </h3>
 
                     {metaLine && (
-                      <p className="mt-1 text-xs sm:text-sm text-zinc-400">
+                      <p className="mt-1 text-xs text-[#8f8f94]">
                         {metaLine}
                       </p>
                     )}
 
-                    {/* Credential ID row with copy button */}
                     {cert.credentialId && (
-                      <div className="mt-5 flex flex-col items-center gap-1.5">
-                        <span className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                      <div className="mt-4 flex flex-col items-center gap-1.5">
+                        <span className="font-mono text-[11px] uppercase tracking-wider text-[#8f8f94]">
                           Credential ID
                         </span>
-                        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs sm:text-sm text-zinc-200">
+                        <div className="flex items-center gap-2 rounded-md border border-white/[0.08] bg-[#131315] px-3 py-1 font-mono text-xs text-[#ededed]">
                           <span className="select-all">{cert.credentialId}</span>
                           <button
                             type="button"
                             onClick={() => handleCopy(cert.credentialId!)}
-                            className="rounded p-1 text-zinc-400 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                            className={`rounded p-1 text-[#8f8f94] hover:text-white ${focusRing}`}
                             aria-label={`Copy credential ID for ${cert.title}`}
                           >
                             {copiedId === cert.credentialId ? (
-                              <Check size={14} className="text-emerald-400" aria-hidden="true" />
+                              <Check size={13} className="text-[#34d399]" aria-hidden="true" />
                             ) : (
-                              <Copy size={14} aria-hidden="true" />
+                              <Copy size={13} aria-hidden="true" />
                             )}
                           </button>
                         </div>
-                        <div aria-live="polite" className="sr-only">
-                          {copiedId === cert.credentialId
-                            ? `Credential ID ${cert.credentialId} copied to clipboard`
-                            : ""}
-                        </div>
-                        {copiedId === cert.credentialId && (
-                          <span className="font-mono text-[11px] text-emerald-400">
-                            Copied to clipboard!
-                          </span>
-                        )}
                       </div>
                     )}
 
-                    {/* Pending pill and note */}
                     {cert.status === "pending" && (
-                      <div className="mt-5 flex flex-col items-center gap-2">
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
-                          <Clock size={12} aria-hidden="true" />
+                      <div className="mt-4 flex flex-col items-center gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] px-3 py-1 text-xs text-[#8f8f94]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" aria-hidden="true" />
                           <span>Certificate pending</span>
                         </span>
                         {cert.note && (
-                          <p className="max-w-xs text-xs text-zinc-400 leading-relaxed">
+                          <p className="max-w-xs text-xs text-[#8f8f94] leading-relaxed">
                             {cert.note}
                           </p>
                         )}
@@ -280,19 +253,18 @@ export function CertificateViewer({
         </div>
       </div>
 
-      {/* Controls row under stage: Prev, Counter, Next */}
       <div className="mt-4 flex items-center justify-center gap-4">
         <button
           type="button"
           onClick={handlePrev}
           disabled={activeIndex === 0}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-[#0b0b0c] text-[#ededed] hover:bg-white/[0.04] disabled:opacity-30 disabled:pointer-events-none ${focusRing}`}
           aria-label="Previous certificate"
         >
-          <ChevronLeft size={20} aria-hidden="true" />
+          <ChevronLeft size={18} aria-hidden="true" />
         </button>
 
-        <span className="font-mono text-sm font-semibold tracking-wider text-zinc-300 select-none">
+        <span className="font-mono text-xs tracking-wider text-[#8f8f94] select-none">
           {activeIndex + 1} / {certifications.length}
         </span>
 
@@ -300,62 +272,55 @@ export function CertificateViewer({
           type="button"
           onClick={handleNext}
           disabled={activeIndex === certifications.length - 1}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-[#0b0b0c] text-[#ededed] hover:bg-white/[0.04] disabled:opacity-30 disabled:pointer-events-none ${focusRing}`}
           aria-label="Next certificate"
         >
-          <ChevronRight size={20} aria-hidden="true" />
+          <ChevronRight size={18} aria-hidden="true" />
         </button>
       </div>
 
-      {/* Caption block under controls (min-h so card does not jump) */}
-      <div className="mt-4 flex min-h-[92px] flex-col justify-between border-t border-white/5 pt-3">
+      <div className="mt-4 flex min-h-[84px] flex-col justify-between border-t border-white/[0.08] pt-3">
         <div className="flex flex-col">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="line-clamp-2 text-base sm:text-lg font-semibold text-white">
+            <h3 className="line-clamp-2 text-base font-medium text-white">
               {currentCert.title}
             </h3>
 
-            {/* Status chip */}
             {currentCert.verifyUrl ? (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
-                <CheckCircle2 size={12} aria-hidden="true" />
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-[#ededed]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#34d399]" />
                 <span>Verified link</span>
               </span>
             ) : currentCert.status === "pending" ? (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-0.5 text-xs font-medium text-amber-300">
-                <Clock size={12} aria-hidden="true" />
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-[#ededed]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
                 <span>Pending</span>
               </span>
-            ) : currentCert.credentialId ? (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-zinc-300">
-                <span>Earned credential</span>
-              </span>
             ) : (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-zinc-300">
-                <span>Earned</span>
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-[#8f8f94]">
+                <span>Earned credential</span>
               </span>
             )}
           </div>
 
           {formatCertMeta(currentCert.issuer, currentCert.year) && (
-            <p className="mt-1 text-sm text-zinc-400">
+            <p className="mt-1 text-xs text-[#8f8f94]">
               {formatCertMeta(currentCert.issuer, currentCert.year)}
             </p>
           )}
         </div>
 
-        {/* Actions row: Verify credential button + Zoom button */}
-        <div className="mt-3 flex flex-wrap items-center gap-2.5">
+        <div className="mt-3 flex flex-wrap items-center gap-2">
           {currentCert.verifyUrl && (
             <a
               href={currentCert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Verify ${currentCert.title} credential`}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/20 bg-transparent px-4 text-xs font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className={`inline-flex h-8 items-center gap-1.5 rounded-lg border border-white/[0.08] bg-[#0b0b0c] px-3 text-xs text-[#ededed] hover:bg-white/[0.04] ${focusRing}`}
             >
               <span>Verify credential</span>
-              <ExternalLink size={13} aria-hidden="true" />
+              <ExternalLink size={12} aria-hidden="true" />
             </a>
           )}
 
@@ -364,16 +329,15 @@ export function CertificateViewer({
               type="button"
               onClick={() => onOpenLightbox(activeIndex)}
               aria-label={`Zoom into ${currentCert.title}`}
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/20 bg-transparent px-3 text-xs font-medium text-zinc-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className={`inline-flex h-8 items-center gap-1.5 rounded-lg border border-white/[0.08] bg-[#0b0b0c] px-3 text-xs text-[#8f8f94] hover:text-white hover:bg-white/[0.04] ${focusRing}`}
             >
-              <Maximize2 size={13} aria-hidden="true" />
+              <Maximize2 size={12} aria-hidden="true" />
               <span>Zoom</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* Visually hidden aria-live announcement */}
       <div className="sr-only" aria-live="polite">
         Certificate {activeIndex + 1} of {certifications.length}: {currentCert.title}
       </div>

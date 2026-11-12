@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
-import { projectAccentStyles } from "@/lib/project-styles";
 import { ProjectGalleryLightbox } from "./ProjectGalleryLightbox";
 import { TechChip } from "@/components/ui/TechChip";
 import { cn } from "@/lib/utils";
@@ -24,7 +23,7 @@ type ProjectDetailContentProps = {
 };
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
 
 export function ProjectDetailContent({
   project,
@@ -32,7 +31,6 @@ export function ProjectDetailContent({
   nextProject,
 }: ProjectDetailContentProps) {
   const shouldReduceMotion = useReducedMotion();
-  const styles = projectAccentStyles[project.accent];
 
   const galleryImages =
     project.gallery && project.gallery.length > 0
@@ -53,16 +51,14 @@ export function ProjectDetailContent({
 
   return (
     <div className="mx-auto w-full max-w-[1100px] px-6 pt-28 pb-24 md:px-10">
-      {/* Top Bar Navigation */}
       <motion.div
         {...enter(0)}
-        className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5"
+        className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-5"
       >
         <Link
-          href="/#projects"
-          scroll={true}
+          href="/projects"
           className={cn(
-            "group inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-white",
+            "group inline-flex items-center gap-2 text-sm font-medium text-[#8f8f94] transition-colors hover:text-white",
             focusRing
           )}
         >
@@ -70,7 +66,7 @@ export function ProjectDetailContent({
           <span>All projects</span>
         </Link>
 
-        <div className="flex items-center gap-4 text-sm text-zinc-400">
+        <div className="flex items-center gap-4 text-sm text-[#8f8f94]">
           {prevProject && (
             <Link
               href={`/projects/${prevProject.slug}`}
@@ -81,7 +77,7 @@ export function ProjectDetailContent({
             >
               <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
               <span className="hidden sm:inline">Previous:</span>
-              <span className="max-w-[120px] truncate text-zinc-200 sm:max-w-[160px]">
+              <span className="max-w-[120px] truncate text-[#ededed] sm:max-w-[160px]">
                 {prevProject.title}
               </span>
             </Link>
@@ -102,7 +98,7 @@ export function ProjectDetailContent({
               )}
             >
               <span className="hidden sm:inline">Next:</span>
-              <span className="max-w-[120px] truncate text-zinc-200 sm:max-w-[160px]">
+              <span className="max-w-[120px] truncate text-[#ededed] sm:max-w-[160px]">
                 {nextProject.title}
               </span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -111,9 +107,7 @@ export function ProjectDetailContent({
         </div>
       </motion.div>
 
-      {/* Main Presentation Box */}
       <div className="space-y-10">
-        {/* Hero Media (Aspect 16:7 with Dark Panel + Lightbox) */}
         <motion.div {...enter(1)}>
           <ProjectGalleryLightbox
             title={project.title}
@@ -122,70 +116,58 @@ export function ProjectDetailContent({
           />
         </motion.div>
 
-        {/* Header Row: H1 Left, Category Badge Right */}
         <motion.div {...enter(2)} className="space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+            <h1 className="font-serif text-3xl font-normal tracking-tight text-white md:text-4xl">
               {project.title}
             </h1>
 
             <div className="flex shrink-0 items-center gap-2">
-              <span
-                className={cn(
-                  "rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-sm",
-                  styles.badge
-                )}
-              >
+              <span className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 text-xs font-medium text-[#8f8f94]">
                 {project.category}
               </span>
               {project.badge && (
-                <span className="rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-medium text-zinc-200 backdrop-blur-sm">
+                <span className="rounded-full border border-white/[0.08] bg-[#131315] px-3 py-1 text-xs font-medium text-[#ededed]">
                   {project.badge}
                 </span>
               )}
             </div>
           </div>
 
-          {/* Subtitle in text-sm mono text-zinc-400 with dot separators */}
-          <p className="font-mono text-sm text-zinc-400">
+          <p className="font-mono text-xs text-[#8f8f94]">
             {project.subtitle}
           </p>
 
-          {/* Description Paragraph */}
-          <p className="max-w-[65ch] text-base leading-relaxed text-zinc-300 md:text-lg">
+          <p className="max-w-[65ch] text-base leading-relaxed text-[#8f8f94] md:text-lg">
             {project.description}
           </p>
         </motion.div>
 
-        {/* Tech Chips Row: Outlined 14px reusing Skills style */}
-        <motion.div {...enter(3)} className="flex flex-wrap gap-2.5">
+        <motion.div {...enter(3)} className="flex flex-wrap gap-2">
           {project.tech.map((skill) => (
             <TechChip
               key={skill}
               label={skill}
-              accentHoverClass={styles.chipHover}
             />
           ))}
         </motion.div>
 
-        {/* Stats Row: 3 Equal Columns with 1px Dividers */}
         <motion.div
           {...enter(4)}
-          className="grid grid-cols-1 divide-y divide-white/10 rounded-xl border border-white/10 bg-zinc-950/60 md:grid-cols-3 md:divide-x md:divide-y-0"
+          className="grid grid-cols-1 divide-y divide-white/[0.08] rounded-xl border border-white/[0.08] bg-[#131315] md:grid-cols-3 md:divide-x md:divide-y-0"
         >
           {project.stats.map((stat, idx) => (
             <div key={idx} className="flex flex-col justify-center p-5 sm:p-6">
-              <span className="text-lg font-semibold text-white sm:text-xl">
+              <span className="text-lg font-medium text-white sm:text-xl">
                 {stat.value}
               </span>
-              <span className="mt-1 font-mono text-xs uppercase tracking-wider text-zinc-400">
+              <span className="mt-1 font-mono text-xs uppercase tracking-wider text-[#8f8f94]">
                 {stat.label}
               </span>
             </div>
           ))}
         </motion.div>
 
-        {/* Actions: Primary Live Demo and Secondary View on GitHub (h-12 hero style) */}
         {(project.links?.live || project.links?.demo || project.links?.github) && (
           <motion.div {...enter(5)} className="flex flex-wrap items-center gap-3 pt-2">
             {(project.links?.live || project.links?.demo) && (
@@ -194,12 +176,12 @@ export function ProjectDetailContent({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-flex h-12 min-w-[44px] items-center justify-center gap-2 rounded-full bg-white px-6 text-[15px] font-medium text-zinc-950 transition-colors hover:bg-zinc-200",
+                  "inline-flex h-10 min-w-[44px] items-center justify-center gap-2 rounded-lg bg-[#c6f432] px-5 text-sm font-semibold text-[#0b0b0c] transition-colors hover:bg-[#b5e028]",
                   focusRing
                 )}
               >
                 <span>Live demo</span>
-                <ExternalLink size={18} aria-hidden="true" />
+                <ExternalLink size={16} aria-hidden="true" />
               </a>
             )}
 
@@ -209,27 +191,25 @@ export function ProjectDetailContent({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-flex h-12 min-w-[44px] items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-6 text-[15px] font-medium text-white transition-colors hover:bg-white/5",
+                  "inline-flex h-10 min-w-[44px] items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-transparent px-5 text-sm font-medium text-white transition-colors hover:bg-white/[0.04]",
                   focusRing
                 )}
               >
-                <GithubIcon className="h-5 w-5" />
+                <GithubIcon className="h-4 w-4" />
                 <span>View on GitHub</span>
               </a>
             )}
           </motion.div>
         )}
 
-        {/* Detailed Sections with Sticky Table of Contents on lg+ */}
         {validSections.length > 0 && (
           <motion.div
             {...enter(6)}
-            className="mt-16 border-t border-white/10 pt-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12"
+            className="mt-16 border-t border-white/[0.08] pt-12 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12"
           >
-            {/* Sticky Table of Contents on lg+ */}
             <aside className="hidden lg:block">
               <div className="sticky top-28 space-y-3">
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-[#8f8f94]">
                   Contents
                 </p>
                 <nav aria-label="Section navigation" className="flex flex-col space-y-2">
@@ -238,7 +218,7 @@ export function ProjectDetailContent({
                       key={idx}
                       href={`#section-${idx}`}
                       className={cn(
-                        "text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white",
+                        "text-sm text-[#8f8f94] transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white",
                         focusRing
                       )}
                     >
@@ -249,7 +229,6 @@ export function ProjectDetailContent({
               </div>
             </aside>
 
-            {/* Section Blocks */}
             <div className="space-y-12">
               {validSections.map((section, idx) => (
                 <section
@@ -257,10 +236,10 @@ export function ProjectDetailContent({
                   id={`section-${idx}`}
                   className="scroll-mt-28 space-y-3"
                 >
-                  <h2 className="text-2xl font-bold tracking-tight text-white">
+                  <h2 className="font-serif text-2xl font-normal tracking-tight text-white">
                     {section.heading}
                   </h2>
-                  <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
+                  <p className="text-base leading-relaxed text-[#8f8f94] md:text-lg">
                     {section.body}
                   </p>
                 </section>
@@ -269,22 +248,21 @@ export function ProjectDetailContent({
           </motion.div>
         )}
 
-        {/* Footer of page: Next project teaser card + Back to all projects */}
         <motion.div
           {...enter(7)}
-          className="mt-20 border-t border-white/10 pt-12"
+          className="mt-20 border-t border-white/[0.08] pt-12"
         >
           {nextProject ? (
-            <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8 backdrop-blur-sm">
+            <div className="rounded-xl border border-white/[0.08] bg-[#131315] p-6 sm:p-8">
               <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
                 <div>
-                  <p className="font-mono text-xs tracking-wider uppercase text-zinc-400">
+                  <p className="font-mono text-xs tracking-wider uppercase text-[#8f8f94]">
                     Next Case Study
                   </p>
-                  <h3 className="mt-2 text-2xl font-bold text-white">
+                  <h3 className="mt-2 font-serif text-2xl font-normal text-white">
                     {nextProject.title}
                   </h3>
-                  <p className="mt-1 max-w-[50ch] text-sm text-zinc-300">
+                  <p className="mt-1 max-w-[50ch] text-sm text-[#8f8f94]">
                     {nextProject.summary}
                   </p>
                 </div>
@@ -292,7 +270,7 @@ export function ProjectDetailContent({
                   <Link
                     href={`/projects/${nextProject.slug}`}
                     className={cn(
-                      "inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-200",
+                      "inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#c6f432] px-5 text-sm font-semibold text-[#0b0b0c] transition-colors hover:bg-[#b5e028]",
                       focusRing
                     )}
                   >
@@ -305,9 +283,9 @@ export function ProjectDetailContent({
           ) : (
             <div className="flex justify-center">
               <Link
-                href="/#projects"
+                href="/projects"
                 className={cn(
-                  "inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-8 text-sm font-medium text-white hover:bg-white/5",
+                  "inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-transparent px-6 text-sm font-medium text-white hover:bg-white/[0.04]",
                   focusRing
                 )}
               >
@@ -317,15 +295,24 @@ export function ProjectDetailContent({
             </div>
           )}
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center gap-6">
             <Link
               href="/#projects"
               className={cn(
-                "inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white",
+                "inline-flex items-center gap-2 text-sm text-[#8f8f94] hover:text-white",
                 focusRing
               )}
             >
-              <span>← Back to featured projects</span>
+              <span>← Featured on home</span>
+            </Link>
+            <Link
+              href="/projects"
+              className={cn(
+                "inline-flex items-center gap-2 text-sm text-[#8f8f94] hover:text-white",
+                focusRing
+              )}
+            >
+              <span>All projects</span>
             </Link>
           </div>
         </motion.div>

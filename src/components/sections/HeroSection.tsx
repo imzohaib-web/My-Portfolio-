@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ChevronDown, Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { HeroTerminal } from "./HeroTerminal";
+import { Button } from "@/components/ui/Button";
 import { projects } from "@/data/projects";
 import { experiences } from "@/data/experience";
 import { PROFILE } from "@/lib/profile";
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
 
 const SOCIAL_LINKS = [
   {
@@ -50,22 +50,6 @@ const SOCIAL_LINKS = [
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
-  const [hideScrollCue, setHideScrollCue] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setHideScrollCue(window.scrollY > 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const enter = (index: number) => ({
-    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 },
-    animate: { opacity: 1, y: 0 },
-    transition: shouldReduceMotion
-      ? { duration: 0 }
-      : { duration: 0.45, delay: index * 0.08, ease: "easeOut" as const },
-  });
 
   const statChips = [
     `${projects.length} projects built`,
@@ -77,98 +61,64 @@ export function HeroSection() {
     <section
       id="hero"
       aria-label="Introduction"
-      className="relative flex min-h-[calc(100svh-80px)] flex-col pt-28 pb-16 overflow-hidden"
+      className="relative flex min-h-[calc(100svh-80px)] flex-col pt-28 pb-16 bg-[#0b0b0c]"
     >
-      {/* Moved background radial glows inward to prevent viewport edge cropping */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[12%] top-[40%] h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600 opacity-[0.20] blur-[140px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[82%] top-[35%] h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400 opacity-[0.20] blur-[140px]"
-      />
-
       <Container className="relative z-10 flex flex-1 items-center">
-        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div className="flex min-w-0 flex-col gap-5 text-left lg:gap-6">
-            {/* Eyebrow: Consistent role from PROFILE, tracking-[0.2em], accent cyan */}
-            <motion.span
-              {...enter(0)}
-              className="font-mono text-[13px] tracking-[0.2em] uppercase text-[var(--accent-primary)]"
-            >
+            <span className="font-mono text-xs tracking-[0.2em] uppercase text-[#8f8f94]">
               {PROFILE.role}
-            </motion.span>
+            </span>
 
-            {/* Headline: font-extrabold (800) and tracking-[-0.025em] so letters never touch */}
             <motion.h1
-              {...enter(1)}
-              className="max-w-[14ch] text-[clamp(2.25rem,6.5vw,5.25rem)] font-extrabold leading-[1.02] tracking-[-0.025em] text-white"
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="font-serif max-w-[15ch] text-[clamp(2.75rem,7vw,5.5rem)] font-normal leading-[1.04] tracking-[-0.01em] [text-wrap:balance] text-white"
             >
               <span>I build </span>
-              <span
-                className="bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent"
-                style={{ textShadow: "0 0 40px rgba(34, 211, 238, 0.35)" }}
-              >
-                AI
-              </span>
+              <span className="italic text-[#c6f432] px-[0.08em]">AI</span>
               <span> that actually ships.</span>
             </motion.h1>
 
-            {/* Paragraph with polished bio copy */}
-            <motion.p
-              {...enter(2)}
-              className="max-w-[52ch] text-lg leading-relaxed text-zinc-300 lg:text-xl"
-            >
+            <p className="max-w-[50ch] text-base leading-relaxed text-[#8f8f94] lg:text-lg">
               I&apos;m Zohaib, a final-year Software Engineering student at COMSATS building RAG systems,
               LLM apps and full&#8209;stack products from prototype to production.
-            </motion.p>
+            </p>
 
-            {/* Data-driven stat chips: projects, internships, hackathon */}
-            <motion.div {...enter(3)} className="flex flex-wrap gap-2 mt-6">
+            <div className="flex flex-wrap gap-2 pt-1">
               {statChips.map((chip) => (
                 <span
                   key={chip}
-                  className="inline-flex h-8 items-center rounded-full border border-white/10 bg-white/5 px-3 font-mono text-[13px] text-zinc-300"
+                  className="inline-flex h-7 items-center rounded-md border border-white/[0.08] bg-[#131315] px-2.5 font-mono text-xs text-[#8f8f94]"
                 >
                   {chip}
                 </span>
               ))}
-            </motion.div>
+            </div>
 
-            {/* Action buttons with high-contrast borders and accessible hints */}
-            <motion.div
-              {...enter(4)}
-              className="flex flex-wrap items-center gap-3 pt-1 sm:gap-3"
-            >
-              <a
-                href="#projects"
-                className={`inline-flex h-12 w-full min-w-[44px] items-center justify-center gap-2 rounded-full bg-white px-6 text-[15px] font-medium text-zinc-950 transition-colors hover:bg-zinc-200 sm:w-auto ${focusRing}`}
-              >
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <Button href="#projects" variant="primary">
                 <span>View my work</span>
-                <ArrowRight size={18} aria-hidden="true" />
-              </a>
-              <a
-                href="#contact"
-                className={`inline-flex h-12 min-w-[44px] items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-6 text-[15px] font-medium text-white transition-colors hover:bg-white/5 hover:border-white/35 sm:w-auto ${focusRing}`}
-              >
+                <ArrowRight size={16} aria-hidden="true" />
+              </Button>
+              <Button href="#contact" variant="ghost">
                 <span>Let&apos;s talk</span>
-              </a>
+              </Button>
               <a
                 href="/resume/Zohaib_Umer_CV.pdf"
                 download="Zohaib_Umer_CV.pdf"
                 type="application/pdf"
                 rel="noopener"
-                className={`inline-flex h-12 min-w-[44px] items-center justify-center gap-2 px-4 text-[15px] font-medium text-zinc-400 transition-colors hover:text-white ${focusRing}`}
+                className={`inline-flex h-10 min-w-[44px] items-center justify-center gap-2 px-3 text-sm font-medium text-[#8f8f94] transition-colors hover:text-white rounded-lg ${focusRing}`}
               >
-                <Download size={18} aria-hidden="true" />
+                <Download size={16} aria-hidden="true" />
                 <span>Resume</span>
-                <span className="font-mono text-xs text-zinc-400">PDF</span>
+                <span className="font-mono text-xs text-[#8f8f94]">PDF</span>
               </a>
-            </motion.div>
+            </div>
 
-            {/* Social links row: GitHub, LinkedIn, Email */}
-            <motion.div {...enter(5)} className="flex items-center gap-1 pt-1">
+            <div className="flex items-center gap-1 pt-1">
               {SOCIAL_LINKS.map((link) => (
                 <a
                   key={link.name}
@@ -177,36 +127,19 @@ export function HeroSection() {
                   rel={link.isExternal ? "noopener noreferrer" : undefined}
                   aria-label={link.ariaLabel}
                   title={link.name}
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-lg text-zinc-400 transition-all hover:-translate-y-0.5 hover:text-white ${focusRing}`}
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-lg text-[#8f8f94] transition-colors hover:text-[#c6f432] ${focusRing}`}
                 >
                   {link.icon}
                 </a>
               ))}
-            </motion.div>
+            </div>
           </div>
 
-          <motion.div {...enter(6)} className="min-w-0 w-full">
+          <div className="min-w-0 w-full">
             <HeroTerminal />
-          </motion.div>
+          </div>
         </div>
       </Container>
-
-      {/* Floating scroll indicator fading out after ~80px */}
-      {!shouldReduceMotion && (
-        <motion.a
-          href="#projects"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: hideScrollCue ? 0 : 1 }}
-          transition={{ duration: 0.35 }}
-          aria-hidden={hideScrollCue}
-          tabIndex={hideScrollCue ? -1 : 0}
-          className={`pointer-events-auto absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 font-mono text-xs text-zinc-400 transition-colors hover:text-zinc-200 md:flex ${hideScrollCue ? "pointer-events-none" : ""} ${focusRing}`}
-          aria-label="Scroll to projects section"
-        >
-          <span>Scroll</span>
-          <ChevronDown className="h-4 w-4 animate-bounce" aria-hidden="true" />
-        </motion.a>
-      )}
     </section>
   );
 }

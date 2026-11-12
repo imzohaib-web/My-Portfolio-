@@ -57,44 +57,28 @@ export function MilestonesSection() {
     <Section
       id="milestones"
       aria-labelledby="milestones-heading"
-      className="z-10 relative scroll-mt-24"
+      className="z-10 relative scroll-mt-24 bg-[#0b0b0c]"
     >
-      {/* Background Ambience & Subtle Grid */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,#000_15%,transparent_100%)] opacity-30"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-[10%] top-[20%] h-[min(400px,50vw)] w-[min(400px,50vw)] rounded-full bg-[#00ffff] opacity-[0.07] blur-[130px] [mask-image:radial-gradient(circle,#000_30%,transparent_70%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-[10%] top-[35%] h-[min(420px,52vw)] w-[min(420px,52vw)] rounded-full bg-[#b026ff] opacity-[0.08] blur-[130px] [mask-image:radial-gradient(circle,#000_30%,transparent_70%)]"
-      />
-
       <Container className="relative z-10">
-        {/* Header: Eyebrow, H2, Subtitle, and 1px gradient divider */}
         <motion.div {...headerMotion} className="max-w-3xl">
-          <p className="font-mono text-[13px] tracking-[0.2em] uppercase text-cyan-400">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase text-[#8f8f94]">
             {"// 05 · MILESTONES"}
           </p>
           <h2
             id="milestones-heading"
-            className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-tight tracking-[-0.02em] text-white"
+            className="mt-3 font-serif text-[clamp(2.25rem,4.5vw,3.5rem)] font-normal leading-tight tracking-tight text-white"
           >
             Milestones
           </h2>
-          <p className="mt-4 max-w-[60ch] text-base text-zinc-300 md:text-lg">
+          <p className="mt-3 max-w-[60ch] text-base text-[#8f8f94] md:text-lg">
             Competitions and programs beyond the classroom.
           </p>
           <div
             aria-hidden="true"
-            className="mt-8 mb-10 h-px w-full bg-gradient-to-r from-cyan-400 via-cyan-400/40 to-transparent"
+            className="mt-8 mb-10 h-px w-full bg-white/[0.08]"
           />
         </motion.div>
 
-        {/* Responsive Grid: lg+ 3 cols, md horizontal cards in single column, <md stacked */}
         <ul
           role="list"
           className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"
@@ -122,7 +106,6 @@ export function MilestonesSection() {
         </ul>
       </Container>
 
-      {/* Lightbox Modal (reusing CertificateLightbox) */}
       <CertificateLightbox
         isOpen={isLightboxOpen}
         certifications={milestoneLightboxItems}

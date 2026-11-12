@@ -45,15 +45,15 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={cn(
-        "group relative py-1 text-sm text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm",
-        isActive && "text-white",
+        "group relative py-1 text-sm text-[#8f8f94] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c] rounded-sm",
+        isActive && "text-white font-medium",
         className
       )}
     >
       {name}
       <span
         className={cn(
-          "absolute -bottom-0.5 left-0 h-px bg-white/70 transition-all duration-200",
+          "absolute -bottom-0.5 left-0 h-px bg-[#c6f432] transition-all duration-200",
           isActive ? "w-full" : "w-0 group-hover:w-full"
         )}
         aria-hidden="true"
@@ -115,7 +115,6 @@ export function Navbar() {
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
 
-  // Lock and restore body & documentElement scroll without rubber-banding
   useEffect(() => {
     if (isOpen) {
       const originalBodyOverflow = document.body.style.overflow;
@@ -134,7 +133,6 @@ export function Navbar() {
     }
   }, [isOpen]);
 
-  // Focus management: focus first link when opened, return to toggle button when closed
   useEffect(() => {
     if (isOpen) {
       wasOpenRef.current = true;
@@ -148,7 +146,6 @@ export function Navbar() {
     }
   }, [isOpen]);
 
-  // Close on Escape key
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -158,7 +155,6 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, closeMenu]);
 
-  // Close on resize to desktop (>= 768px) to prevent stuck states
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -176,9 +172,9 @@ export function Navbar() {
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[60] h-20 transition-colors duration-300",
+          "fixed top-0 left-0 right-0 z-[60] h-20 transition-colors duration-200",
           scrolled && !isOpen
-            ? "border-b border-white/5 bg-black/50 backdrop-blur-md"
+            ? "border-b border-white/[0.08] bg-[#0b0b0c]/95"
             : "bg-transparent"
         )}
       >
@@ -205,24 +201,19 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="justify-self-end flex items-center gap-3">
+          <div className="justify-self-end flex items-center gap-4">
             <div
-              className="hidden xl:inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 select-none"
+              className="hidden xl:inline-flex items-center gap-2 text-xs text-[#ededed] select-none"
               role="status"
             >
-              <span className="relative flex h-2 w-2">
-                {!shouldReduceMotion && (
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                )}
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true" />
               <span>Available for new opportunities</span>
             </div>
 
             <button
               ref={menuButtonRef}
               type="button"
-              className="md:hidden relative z-[70] flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 backdrop-blur-md hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="md:hidden relative z-[70] flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-[#131315] text-[#ededed] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]"
               onClick={() => setIsOpen((o) => !o)}
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
@@ -241,7 +232,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm md:hidden touch-none"
+            className="fixed inset-0 z-50 bg-black/80 md:hidden touch-none"
             onClick={closeMenu}
             aria-hidden={!isOpen}
           >
@@ -256,11 +247,11 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="absolute top-0 right-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-[320px] sm:max-w-sm flex-col justify-between overflow-y-auto overscroll-contain border-l border-white/10 bg-zinc-950/95 backdrop-blur-xl shadow-2xl pt-[max(5.5rem,calc(5rem+env(safe-area-inset-top,0px)))] pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))] pl-[max(1.5rem,calc(1.5rem+env(safe-area-inset-left,0px)))] pr-[max(1.5rem,calc(1.5rem+env(safe-area-inset-right,0px)))]"
+              className="absolute top-0 right-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-[320px] sm:max-w-sm flex-col justify-between overflow-y-auto overscroll-contain border-l border-white/[0.08] bg-[#131315] pt-[max(5.5rem,calc(5rem+env(safe-area-inset-top,0px)))] pb-[max(1.5rem,calc(1.5rem+env(safe-area-inset-bottom,0px)))] pl-[max(1.5rem,calc(1.5rem+env(safe-area-inset-left,0px)))] pr-[max(1.5rem,calc(1.5rem+env(safe-area-inset-right,0px)))]"
               onClick={(e) => e.stopPropagation()}
             >
               <div>
-                <nav className="flex flex-col gap-2.5">
+                <nav className="flex flex-col gap-2">
                   {links.map((link, idx) => {
                     const isActive = isProjectsPage
                       ? link.name === "Projects"
@@ -273,10 +264,10 @@ export function Navbar() {
                         href={resolveHref(link.href)}
                         onClick={closeMenu}
                         className={cn(
-                          "flex min-h-[44px] items-center px-4 py-3 rounded-xl text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 select-none",
+                          "flex min-h-[44px] items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] select-none",
                           isActive
-                            ? "bg-white/10 text-white font-semibold border border-white/10"
-                            : "text-zinc-200 hover:text-white hover:bg-white/5"
+                            ? "bg-white/[0.08] text-white font-medium border border-white/[0.08]"
+                            : "text-[#8f8f94] hover:text-white hover:bg-white/[0.04]"
                         )}
                       >
                         {link.name}
@@ -286,17 +277,12 @@ export function Navbar() {
                 </nav>
               </div>
 
-              <div className="border-t border-white/10 pt-6 space-y-4">
+              <div className="border-t border-white/[0.08] pt-6 space-y-4">
                 <div
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 select-none"
+                  className="flex items-center gap-2 text-xs text-[#ededed] select-none"
                   role="status"
                 >
-                  <span className="relative flex h-2 w-2">
-                    {!shouldReduceMotion && (
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    )}
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                  </span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true" />
                   <span>Available for new opportunities</span>
                 </div>
 
@@ -305,7 +291,7 @@ export function Navbar() {
                   download="Zohaib_Umer_CV.pdf"
                   type="application/pdf"
                   rel="noopener"
-                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-white/[0.08] px-5 py-2.5 text-sm font-medium text-white hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432]"
                   onClick={closeMenu}
                 >
                   <span>Resume</span>

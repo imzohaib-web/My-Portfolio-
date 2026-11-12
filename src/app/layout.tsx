@@ -1,29 +1,31 @@
 import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import "./globals.css";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { PROFILE } from "@/lib/profile";
+
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
+  weight: "400",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
-import { Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { CustomCursor } from "@/components/ui/CustomCursor";
-import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-import { PROFILE } from "@/lib/profile";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zohaibumer.dev"),
@@ -37,10 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased selection:bg-[rgba(176,38,255,0.5)] selection:text-white`}>
-        <CustomCursor />
-        <AnimatedBackground />
+    <html
+      lang="en"
+      className={`scroll-smooth ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+    >
+      <body className="antialiased selection:bg-[#c6f432] selection:text-[#0b0b0c] bg-[#0b0b0c] text-[#ededed]">
         <Navbar />
         {children}
         <Footer />

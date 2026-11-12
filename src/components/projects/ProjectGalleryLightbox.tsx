@@ -12,7 +12,7 @@ type ProjectGalleryProps = {
 };
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
 
 export function ProjectGalleryLightbox({ title, images, priority = false }: ProjectGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -49,7 +49,6 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
     [images.length]
   );
 
-  // Keyboard navigation & Esc to close & focus trap
   useEffect(() => {
     if (!isOpen) return;
 
@@ -64,7 +63,6 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
         e.preventDefault();
         handleNext();
       } else if (e.key === "Tab") {
-        // Simple focus trap within lightbox modal
         const focusable = document.querySelectorAll<HTMLElement>(
           "[data-lightbox] button, [data-lightbox] [tabindex='0']"
         );
@@ -94,8 +92,7 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
 
   return (
     <div className="space-y-4">
-      {/* Hero Media Container */}
-      <div className="group relative aspect-[16/7] w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-950">
+      <div className="group relative aspect-[16/7] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0b0b0c]">
         <button
           ref={triggerRef}
           type="button"
@@ -115,19 +112,18 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
             priority={priority}
           />
           <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
-          <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-xs font-mono text-zinc-300 backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-md border border-white/[0.08] bg-[#131315] px-3 py-1.5 text-xs font-mono text-[#8f8f94] opacity-0 transition-opacity group-hover:opacity-100">
             <ZoomIn size={14} aria-hidden="true" />
             <span>Click to zoom</span>
           </div>
         </button>
       </div>
 
-      {/* Thumbnails below hero if multiple images */}
       {images.length > 1 && (
         <div
           role="tablist"
           aria-label="Gallery thumbnails"
-          className="flex flex-wrap gap-3 pt-1"
+          className="flex flex-wrap gap-2.5 pt-1"
         >
           {images.map((img, idx) => (
             <button
@@ -138,11 +134,11 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
               aria-label={`View image ${idx + 1} of ${images.length}`}
               onClick={() => setActiveIndex(idx)}
               className={cn(
-                "relative h-16 w-24 overflow-hidden rounded-lg border bg-zinc-900 transition-all sm:h-20 sm:w-32",
+                "relative h-16 w-24 overflow-hidden rounded-md border bg-[#0b0b0c] transition-all sm:h-20 sm:w-32",
                 focusRing,
                 idx === activeIndex
-                  ? "border-cyan-400 ring-2 ring-cyan-400/30 opacity-100"
-                  : "border-white/10 opacity-60 hover:opacity-100"
+                  ? "border-[#c6f432] ring-1 ring-[#c6f432] opacity-100"
+                  : "border-white/[0.08] opacity-60 hover:opacity-100"
               )}
             >
               <Image
@@ -150,26 +146,24 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
                 alt={`${title} thumbnail ${idx + 1}`}
                 fill
                 sizes="128px"
-                className="object-cover"
+                className="object-contain p-1"
               />
             </button>
           ))}
         </div>
       )}
 
-      {/* Lightbox Modal */}
       {isOpen && (
         <div
           data-lightbox="true"
           role="dialog"
           aria-modal="true"
           aria-label={`${title} image preview`}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4"
           onClick={handleClose}
         >
-          {/* Controls bar */}
           <div className="absolute top-4 right-4 z-10 flex items-center gap-3">
-            <span className="font-mono text-xs text-zinc-400">
+            <span className="font-mono text-xs text-[#8f8f94]">
               {activeIndex + 1} / {images.length}
             </span>
             <button
@@ -178,15 +172,14 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
               onClick={handleClose}
               aria-label="Close lightbox"
               className={cn(
-                "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white hover:bg-white/20",
+                "inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-[#131315] text-white hover:bg-white/[0.04]",
                 focusRing
               )}
             >
-              <X size={20} aria-hidden="true" />
+              <X size={18} aria-hidden="true" />
             </button>
           </div>
 
-          {/* Navigation arrows (if > 1 image) */}
           {images.length > 1 && (
             <>
               <button
@@ -194,27 +187,26 @@ export function ProjectGalleryLightbox({ title, images, priority = false }: Proj
                 onClick={handlePrev}
                 aria-label="Previous image"
                 className={cn(
-                  "absolute left-4 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white hover:bg-white/20",
+                  "absolute left-4 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg border border-white/[0.08] bg-[#131315] text-white hover:bg-white/[0.04]",
                   focusRing
                 )}
               >
-                <ChevronLeft size={22} aria-hidden="true" />
+                <ChevronLeft size={20} aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={handleNext}
                 aria-label="Next image"
                 className={cn(
-                  "absolute right-4 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white hover:bg-white/20",
+                  "absolute right-4 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg border border-white/[0.08] bg-[#131315] text-white hover:bg-white/[0.04]",
                   focusRing
                 )}
               >
-                <ChevronRight size={22} aria-hidden="true" />
+                <ChevronRight size={20} aria-hidden="true" />
               </button>
             </>
           )}
 
-          {/* Expanded Image */}
           <div
             className="relative h-full max-h-[85vh] w-full max-w-[1100px]"
             onClick={(e) => e.stopPropagation()}

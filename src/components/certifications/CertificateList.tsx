@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Award, CheckCircle2, Clock, Hash } from "lucide-react";
 import type { Certification } from "@/data/certifications";
-import { categoryAccents, formatCertMeta } from "@/data/certifications";
+import { formatCertMeta } from "@/data/certifications";
 import { cn } from "@/lib/utils";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -13,6 +13,9 @@ interface CertificateListProps {
   onSelectIndex: (index: number) => void;
 }
 
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
+
 export function CertificateList({
   certifications,
   activeIndex,
@@ -20,11 +23,8 @@ export function CertificateList({
 }: CertificateListProps) {
   const shouldReduceMotion = useReducedMotion();
   const listRef = useRef<HTMLUListElement>(null);
-
   const isFirstRender = useRef(true);
 
-  // Keep active row/chip visible on mobile horizontal scrolling
-  // Skip on initial render; scroll track element only, never element.scrollIntoView (prevents scrolling window)
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -54,7 +54,6 @@ export function CertificateList({
   const handleRowClick = (index: number) => {
     onSelectIndex(index);
 
-    // On mobile (< lg), scroll viewer into view only if off-screen
     if (typeof window !== "undefined" && window.innerWidth < 1024) {
       const viewer = document.querySelector('[role="region"][aria-roledescription="carousel"]');
       if (viewer) {
@@ -74,9 +73,7 @@ export function CertificateList({
       ref={listRef}
       className={cn(
         "scrollbar-hidden flex w-full",
-        // Below lg: horizontally scrollable chip row to keep section compact on mobile
-        "flex-row gap-2.5 overflow-x-auto snap-x snap-mandatory overscroll-x-contain py-1 -mx-1 px-1",
-        // lg+: vertical stack of compact rows fitting all 8 entries without scrolling
+        "flex-row gap-2 overflow-x-auto snap-x snap-mandatory overscroll-x-contain py-1 -mx-1 px-1",
         "lg:flex-col lg:overflow-visible lg:gap-2 lg:mx-0 lg:px-0 lg:h-full lg:justify-between"
       )}
       role="list"
@@ -84,7 +81,6 @@ export function CertificateList({
     >
       {certifications.map((cert, index) => {
         const isActive = index === activeIndex;
-        const accent = categoryAccents[cert.category];
         const metaLine = formatCertMeta(cert.issuer, cert.year);
 
         return (
@@ -105,68 +101,60 @@ export function CertificateList({
               onClick={() => handleRowClick(index)}
               aria-current={isActive ? "true" : undefined}
               className={cn(
-                "relative flex h-14 md:h-[60px] w-full items-center justify-between rounded-xl px-3 md:px-4 text-left transition-all duration-200 outline-none select-none",
-                "focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+                "relative flex h-14 md:h-[58px] w-full items-center justify-between rounded-lg px-3 md:px-4 text-left transition-colors select-none",
+                focusRing,
                 isActive
-                  ? cn("border shadow-md", accent.activeBorder, accent.activeBg)
-                  : "border border-white/10 bg-zinc-950/40 hover:border-white/20 hover:bg-white/5"
+                  ? "border border-[#c6f432]/60 bg-[#131315]"
+                  : "border border-white/[0.08] bg-[#131315]/50 hover:border-white/20 hover:bg-white/[0.02]"
               )}
             >
-              {/* Left 2px accent bar on active row */}
               {isActive && (
                 <span
-                  className={cn("absolute left-0 top-2 bottom-2 w-0.5 rounded-r", accent.bar)}
+                  className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r bg-[#c6f432]"
                   aria-hidden="true"
                 />
               )}
 
-              {/* Left Column: Icon Tile (36px) + Title + Subtitle */}
               <div className="flex items-center gap-3 min-w-0 pr-2">
                 <div
-                  className={cn(
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
-                    accent.bg,
-                    accent.border,
-                    accent.text
-                  )}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.03] text-[#c6f432]"
                   aria-hidden="true"
                 >
-                  <Award size={18} />
+                  <Award size={16} />
                 </div>
 
                 <div className="flex flex-col min-w-0">
-                  <span className="line-clamp-1 text-sm font-medium text-white group-hover:text-cyan-50">
+                  <span className="line-clamp-1 text-sm font-medium text-white">
                     {cert.title}
                   </span>
                   {metaLine && (
-                    <span className="line-clamp-1 text-xs text-zinc-400">
+                    <span className="line-clamp-1 text-xs text-[#8f8f94]">
                       {metaLine}
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* Right Side Indicator */}
               <div className="shrink-0 flex items-center pl-2">
                 {cert.verifyUrl ? (
                   <span
-                    className="flex items-center text-emerald-400"
+                    className="flex items-center text-[#34d399]"
                     title="Verified credential link"
                     aria-label="Verified link"
                   >
-                    <CheckCircle2 size={16} aria-hidden="true" />
+                    <CheckCircle2 size={15} aria-hidden="true" />
                   </span>
                 ) : cert.status === "pending" ? (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-300">
-                    <Clock size={11} aria-hidden="true" />
+                  <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.02] px-2 py-0.5 text-[11px] text-[#8f8f94]">
+                    <Clock size={11} className="text-[#f59e0b]" aria-hidden="true" />
                     <span>Pending</span>
                   </span>
                 ) : cert.credentialId ? (
                   <span
-                    className="inline-flex items-center gap-1 rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[11px] font-mono text-amber-300"
+                    className="inline-flex items-center gap-1 rounded-md border border-white/[0.08] bg-white/[0.02] px-1.5 py-0.5 text-[10px] font-mono text-[#8f8f94]"
                     title={`Credential ID: ${cert.credentialId}`}
                   >
-                    <Hash size={11} aria-hidden="true" />
+                    <Hash size={10} aria-hidden="true" />
                     <span>ID</span>
                   </span>
                 ) : null}

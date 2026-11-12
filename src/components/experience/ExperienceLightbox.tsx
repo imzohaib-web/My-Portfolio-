@@ -26,7 +26,6 @@ export function ExperienceLightbox({
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Manage body scroll lock and focus restore
   useEffect(() => {
     if (!isOpen) return;
 
@@ -45,7 +44,6 @@ export function ExperienceLightbox({
     };
   }, [isOpen, triggerRef]);
 
-  // Focus trap & Escape key listener
   useEffect(() => {
     if (!isOpen) return;
 
@@ -94,30 +92,28 @@ export function ExperienceLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md md:p-8"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 md:p-8"
           onClick={onClose}
         >
-          {/* Close button */}
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="absolute top-4 right-4 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-zinc-900/80 text-zinc-300 backdrop-blur-sm transition-colors hover:border-white/30 hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:top-6 md:right-6"
+            className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-[#131315] text-[#8f8f94] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] md:top-6 md:right-6"
           >
-            <X size={20} aria-hidden="true" />
+            <X size={18} aria-hidden="true" />
           </button>
 
-          {/* Modal Content */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
             transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
             className="relative flex flex-col items-center justify-center max-w-[90vw] max-h-[85vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative max-h-[80vh] max-w-[90vw] overflow-hidden rounded-xl border border-white/10 bg-zinc-950 shadow-2xl">
+            <div className="relative max-h-[80vh] max-w-[90vw] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0b0b0c]">
               <Image
                 src={image}
                 alt={altText}
@@ -128,7 +124,7 @@ export function ExperienceLightbox({
                 priority={false}
               />
             </div>
-            <p className="mt-3 text-center text-xs text-zinc-400 md:text-sm">
+            <p className="mt-3 text-center text-xs text-[#8f8f94] md:text-sm">
               {label || altText}
             </p>
           </motion.div>

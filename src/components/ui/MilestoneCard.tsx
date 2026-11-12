@@ -9,49 +9,13 @@ import { cn } from "@/lib/utils";
 
 const validCertIds = new Set(certifications.map((c) => c.id));
 
-const categoryConfig: Record<
+const categoryIcons: Record<
   MilestoneCategory,
-  {
-    accent: string;
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>;
-    pillText: string;
-    hoverBorder: string;
-    glow: string;
-    posterGrad: string;
-    tileBorder: string;
-    firstChipText: string;
-  }
+  React.ComponentType<{ className?: string; "aria-hidden"?: boolean | "true" | "false" }>
 > = {
-  Hackathon: {
-    accent: "amber",
-    icon: Trophy,
-    pillText: "text-amber-400",
-    hoverBorder: "hover:border-amber-400/40",
-    glow: "hover:shadow-[0_12px_40px_-10px_rgba(251,191,36,0.18)]",
-    posterGrad: "from-amber-500/20 via-zinc-950/60 to-zinc-950",
-    tileBorder: "border-amber-400/20 bg-amber-400/10 text-amber-400",
-    firstChipText: "text-amber-300",
-  },
-  Leadership: {
-    accent: "cyan",
-    icon: Users,
-    pillText: "text-cyan-400",
-    hoverBorder: "hover:border-cyan-400/40",
-    glow: "hover:shadow-[0_12px_40px_-10px_rgba(34,211,238,0.18)]",
-    posterGrad: "from-cyan-500/20 via-zinc-950/60 to-zinc-950",
-    tileBorder: "border-cyan-400/20 bg-cyan-400/10 text-cyan-400",
-    firstChipText: "text-cyan-300",
-  },
-  Scholarship: {
-    accent: "emerald",
-    icon: GraduationCap,
-    pillText: "text-emerald-400",
-    hoverBorder: "hover:border-emerald-400/40",
-    glow: "hover:shadow-[0_12px_40px_-10px_rgba(52,211,153,0.18)]",
-    posterGrad: "from-emerald-500/20 via-zinc-950/60 to-zinc-950",
-    tileBorder: "border-emerald-400/20 bg-emerald-400/10 text-emerald-400",
-    firstChipText: "text-emerald-300",
-  },
+  Hackathon: Trophy,
+  Leadership: Users,
+  Scholarship: GraduationCap,
 };
 
 export type MilestoneCardProps = {
@@ -60,6 +24,9 @@ export type MilestoneCardProps = {
   priority?: boolean;
   onOpenLightbox?: (index: number, triggerRef: React.RefObject<HTMLButtonElement | null>) => void;
 };
+
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c6f432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0c]";
 
 export function MilestoneCard({
   milestone,
@@ -70,8 +37,7 @@ export function MilestoneCard({
   const [imageError, setImageError] = useState(false);
   const imageButtonRef = useRef<HTMLButtonElement>(null);
 
-  const config = categoryConfig[milestone.category] ?? categoryConfig.Hackathon;
-  const CategoryIcon = config.icon;
+  const CategoryIcon = categoryIcons[milestone.category] ?? Trophy;
   const hasImage = Boolean(milestone.image) && !imageError;
 
   const hasValidCert = Boolean(
@@ -107,22 +73,14 @@ export function MilestoneCard({
 
   return (
     <article
-      data-accent={config.accent}
-      className={cn(
-        "milestone-card group/card relative flex h-full w-full flex-col md:grid md:grid-cols-[42%_1fr] lg:flex lg:flex-col",
-        "rounded-2xl border border-white/10 bg-zinc-950/60 overflow-hidden",
-        "transition-all duration-300 hover:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none",
-        config.hoverBorder,
-        config.glow
-      )}
+      className="group/card relative flex h-full w-full flex-col md:grid md:grid-cols-[42%_1fr] lg:flex lg:flex-col rounded-xl border border-white/[0.08] bg-[#131315] overflow-hidden transition-colors hover:border-white/20"
     >
-      {/* Media: Image or Designed Poster */}
       <button
         ref={imageButtonRef}
         type="button"
         onClick={handleImageClick}
         aria-label={`View photo: ${milestone.title}`}
-        className="milestone-media group/media relative w-full overflow-hidden bg-zinc-950 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 cursor-pointer block select-none"
+        className={`relative w-full aspect-[16/10] overflow-hidden bg-[#0b0b0c] text-left cursor-pointer block select-none border-b border-white/[0.08] ${focusRing}`}
       >
         {hasImage && milestone.image ? (
           <Image
@@ -134,119 +92,83 @@ export function MilestoneCard({
             priority={priority}
             style={{ objectPosition: milestone.imagePosition || "center" }}
             onError={() => setImageError(true)}
-            className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.03] motion-reduce:transform-none"
+            className="object-cover"
           />
         ) : (
-          <div
-            className={cn(
-              "relative flex h-full min-h-[220px] w-full flex-col overflow-hidden bg-gradient-to-br select-none",
-              config.posterGrad
-            )}
-          >
-            {/* Huge faint period numeral bottom-right */}
+          <div className="relative flex h-full min-h-[180px] w-full flex-col overflow-hidden bg-[#0b0b0c] p-6 select-none">
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-1 right-3 font-mono text-7xl font-extrabold text-white/5 select-none tracking-tight"
+              className="pointer-events-none absolute -bottom-1 right-3 font-mono text-6xl font-normal text-white/[0.04] select-none"
             >
               {milestone.period}
             </span>
 
-            {/* Category lucide icon in 48px tile top-left */}
-            <div
-              className={cn(
-                "absolute top-12 left-3 md:top-14 md:left-4 flex h-12 w-12 items-center justify-center rounded-xl border backdrop-blur-md transition-transform duration-500 group-hover/card:scale-105 motion-reduce:transform-none shadow-inner",
-                config.tileBorder
-              )}
-            >
-              <CategoryIcon className="h-6 w-6" aria-hidden="true" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-[#c6f432]">
+              <CategoryIcon className="h-5 w-5" aria-hidden="true" />
             </div>
           </div>
         )}
 
-        {/* Dark gradient overlay on bottom 45% */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/70 to-transparent"
-          aria-hidden="true"
-        />
-
-        {/* Top-left: Category pill */}
-        <div className="absolute top-3 left-3 z-10 flex items-center rounded-full border border-white/15 bg-black/50 px-2.5 py-1 backdrop-blur-md">
-          <span
-            className={cn(
-              "font-mono text-[11px] md:text-xs font-medium uppercase tracking-wider",
-              config.pillText
-            )}
-          >
+        <div className="absolute top-3 left-3 z-10 flex items-center rounded-full border border-white/[0.08] bg-[#0b0b0c]/90 px-2.5 py-0.5">
+          <span className="font-mono text-[11px] font-normal uppercase tracking-wider text-[#8f8f94]">
             {milestone.category}
           </span>
         </div>
 
-        {/* Top-right: Period pill */}
-        <div className="absolute top-3 right-3 z-10 flex items-center rounded-full border border-white/15 bg-black/50 px-2.5 py-1 backdrop-blur-md">
-          <span className="font-mono text-[11px] md:text-xs font-medium tracking-wider text-zinc-300">
+        <div className="absolute top-3 right-3 z-10 flex items-center rounded-full border border-white/[0.08] bg-[#0b0b0c]/90 px-2.5 py-0.5">
+          <span className="font-mono text-[11px] font-normal tracking-wider text-[#8f8f94]">
             {milestone.period}
           </span>
         </div>
 
-        {/* Bottom-left: Status chip */}
         <div className="absolute bottom-3 left-3 z-10">
-          {milestone.tone === "amber" ? (
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/25 bg-black/60 px-2.5 py-1 text-xs font-medium text-amber-400 backdrop-blur-md shadow-sm">
-              <Trophy className="h-3.5 w-3.5 text-amber-400 shrink-0" aria-hidden="true" />
-              <span>{milestone.statusLabel}</span>
-            </div>
-          ) : (
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-black/60 px-2.5 py-1 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-sm">
-              <span
-                className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] shrink-0"
-                aria-hidden="true"
-              />
-              <span>{milestone.statusLabel}</span>
-            </div>
-          )}
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-[#0b0b0c]/90 px-2.5 py-0.5 text-xs text-[#ededed]">
+            <span
+              className={cn(
+                "h-1.5 w-1.5 rounded-full",
+                milestone.tone === "amber" ? "bg-[#f59e0b]" : "bg-[#34d399]"
+              )}
+              aria-hidden="true"
+            />
+            <span>{milestone.statusLabel}</span>
+          </div>
         </div>
       </button>
 
-      {/* Body: Title, Description, Facts, and Footer */}
       <div className="flex flex-1 flex-col p-5 md:p-6 gap-3">
         <h3
           title={milestone.title}
-          className="text-xl font-semibold text-white leading-snug line-clamp-1 transition-colors group-hover/card:text-white"
+          className="text-lg font-medium text-white leading-snug line-clamp-1"
         >
           {milestone.title}
         </h3>
 
-        <p className="milestone-description text-[15px] text-zinc-300 leading-relaxed line-clamp-3 min-h-[4.5rem]">
+        <p className="text-sm text-[#8f8f94] leading-relaxed line-clamp-3 min-h-[4rem]">
           {milestone.description}
         </p>
 
-        {/* Facts Chips */}
-        <div className="mt-1 flex flex-wrap gap-2">
-          {milestone.facts.map((fact, fIndex) => (
+        <div className="mt-1 flex flex-wrap gap-1.5">
+          {milestone.facts.map((fact) => (
             <span
               key={fact}
-              className={cn(
-                "inline-flex h-7 items-center rounded-full border border-white/10 bg-white/5 px-2.5 text-xs select-none",
-                fIndex === 0 ? config.firstChipText : "text-zinc-200"
-              )}
+              className="inline-flex h-6 items-center rounded-md border border-white/[0.08] bg-white/[0.02] px-2 text-xs text-[#8f8f94] select-none"
             >
               {fact}
             </span>
           ))}
         </div>
 
-        {/* Footer pinned to bottom */}
         {showFooter && (
-          <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+          <div className="mt-auto pt-4 border-t border-white/[0.08] flex items-center justify-between">
             {hasValidCert ? (
               <a
                 href="#certifications"
                 onClick={handleCertificateClick}
-                className="group/cert inline-flex items-center gap-1.5 text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-sm py-0.5"
+                className={`group/cert inline-flex items-center gap-1.5 text-xs font-medium text-[#c6f432] hover:underline ${focusRing} rounded-sm py-0.5`}
               >
                 <span>View certificate</span>
                 <ArrowUpRight
-                  className="h-4 w-4 text-cyan-400 transition-transform group-hover/cert:translate-x-0.5 group-hover/cert:-translate-y-0.5 motion-reduce:transform-none"
+                  className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
               </a>
@@ -255,11 +177,11 @@ export function MilestoneCard({
                 href={milestone.link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-sm py-0.5"
+                className={`group/link inline-flex items-center gap-1.5 text-xs font-medium text-[#c6f432] hover:underline ${focusRing} rounded-sm py-0.5`}
               >
                 <span>{milestone.link.label}</span>
                 <ArrowUpRight
-                  className="h-4 w-4 text-cyan-400 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 motion-reduce:transform-none"
+                  className="h-3.5 w-3.5"
                   aria-hidden="true"
                 />
               </a>
